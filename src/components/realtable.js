@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import Pagination from '@mui/material/Pagination';
+import { shadows } from '@mui/system';
 import { createStyles, makeStyles } from '@mui/material';
 
 
@@ -30,21 +30,10 @@ const datagridSx = {
   },
   "& .MuiDataGrid-footerContainer": {
     backgroundColor: "rgba(39,61,74,255)",
+    boxShadow: 3,
+    borderRadius: 1
   },
-  "& .Mui-selected": {
-    color: "rgb(218,225,227)",
-  }
 };
-
-
-function CustomPagination() {
-  return (
-    <Pagination
-      color="primary"
-    />
-  );
-}
-
 
 
 const columns = [
@@ -118,7 +107,7 @@ const rows = [
 
 export default function DataTable() {
   const [pageSize, setPageSize] = React.useState(10);
-
+  
     return (
       <div style={{ width: '100%' }}>
         <DataGrid
@@ -132,7 +121,7 @@ export default function DataTable() {
             disableColumnMenu={true}
             disableSelectionOnClick={true}
             sx={datagridSx}
-            
+
             pageSize={pageSize}
             onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
             rowsPerPageOptions={[5, 10, 15]}
