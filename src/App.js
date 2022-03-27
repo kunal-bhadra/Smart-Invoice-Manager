@@ -6,12 +6,18 @@ import TableFooter from "./components/tablefooter";
 import LeftButtonGroup from "./components/leftbutton";
 import RightButtonGroup from "./components/rightbutton";
 import SearchInput from "./components/searchfield";
+import HRClogo from "./components/hrclogo"
+import ABClogo from "./components/abclogo";
 
 
 function App() {
   return (
     <div className="App">
       <Container maxWidth="false" disableGutters="true">
+        <Grid container spacing={0}>
+          <ABClogo />
+          <HRClogo />
+        </Grid>
         <Grid container spacing={0}>
           <LeftButtonGroup />
           <SearchInput />
