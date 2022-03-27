@@ -11,7 +11,7 @@ export default function SearchInput() {
         <Box mt={1.6}
             component="form"
             sx={{
-                '& > :not(style)': { m: 1, width: '20ch'},
+                '& > :not(style)': { m: 1, width: '20ch', backgroundColor: "white", borderRadius: 1},
             }}
             noValidate
             autoComplete="off"

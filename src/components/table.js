@@ -31,6 +31,12 @@ const datagridSx = {
     boxShadow: 3,
     borderRadius: 1
   },
+  "& .MuiToolbar-root": {
+    color: "rgb(218,225,227)"
+  },
+  "& .MuiDataGrid-selectedRowCount": {
+    color: "rgb(218,225,227)"
+  }
 };
 
 
