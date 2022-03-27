@@ -1,10 +1,22 @@
 import './App.css';
-//import DataTable from "./components/table";
-import DataTable from "./components/realtable"
+import Container from '@mui/material/Container';
+
+import DataTable from "./components/realtable";
+import TableFooter from "./components/tablefooter";
+import Grid from "@mui/material/Grid";
 
 function App() {
   return (
-    <DataTable />
+    <div className="App">
+      <Container maxWidth="false" disableGutters="true">
+        <Grid container spacing={1}>
+          <DataTable />
+        </Grid>
+        <Grid>
+          <TableFooter />
+        </Grid>
+      </Container>
+    </div>
   );
 }
 
@@ -14,5 +26,7 @@ function App() {
 //     <DataTable />
 //   );
 // }
+
+
 
 export default App;

@@ -1,7 +1,5 @@
 import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import { shadows } from '@mui/system';
-import { createStyles, makeStyles } from '@mui/material';
 
 
 const datagridSx = {
