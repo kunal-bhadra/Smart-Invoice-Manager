@@ -1,5 +1,7 @@
 import * as React from 'react';
+import { useEffect } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
+import { getData } from '../services/data';
 
 
 const datagridSx = {
@@ -45,7 +47,7 @@ const columns = [
     { field: 'business_code', headerName: 'Business Code', width: 90, align: "center", headerAlign: 'center' },
     { field: 'cust_number', headerName: 'Customer Number', width: 90, align: "center", headerAlign: 'center' },
     { field: 'clear_date', headerName: 'Clear Date', width: 90, align: "center", headerAlign: 'center' },
-    { field: 'business_year', headerName: 'Business Year', width: 90, align: "center", headerAlign: 'center' },
+    { field: 'buisness_year', headerName: 'Business Year', width: 90, align: "center", headerAlign: 'center' },
     { field: 'doc_id', headerName: 'Document ID', width: 90, align: "center", headerAlign: 'center' },
     { field: 'posting_date', headerName: 'Posting Date', width: 90, align: "center", headerAlign: 'center' },
     { field: 'document_create_date', headerName: 'Document Create Date', width: 90, align: "center", headerAlign: 'center' },
@@ -112,10 +114,16 @@ const rows = [
 export default function DataTable() {
   const [pageSize, setPageSize] = React.useState(10);
   
+  const [data, setData] = React.useState([]);
+  useEffect(async () => {
+    setData(await getData());
+  }, [])
+
     return (
       <div style={{ width: '100%' }}>
         <DataGrid
-            rows={rows} 
+            //rows={rows} 
+            rows={data}
             columns={columns}
             checkboxSelection={true}
             autoHeight={true}
