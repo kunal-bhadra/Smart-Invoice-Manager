@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { getData } from '../services/data';
 
@@ -62,56 +62,7 @@ const columns = [
 ];
 
 
-const rows = [
-    { id: 1, business_code: 'U001', cust_number: 200769623, clear_date: '2020-02-11', business_year: 2020, doc_id: 1930438491, 
-    posting_date: '2020-01-26', document_create_date: '2020-01-25', due_in_date: '2020-02-10', invoice_currency: 'USD', document_type: 'RV',
-    posting_id: 1, total_open_amount: 54273.28, baseline_create_date: '2020-01-26', cust_payment_terms: 'NAH4', invoice_id: 1930438491 },
-    { id: 2, business_code: 'U001', cust_number: 200769623, clear_date: '2020-02-11', business_year: 2020, doc_id: 1930438491, 
-    posting_date: '2020-01-26', document_create_date: '2020-01-25', due_in_date: '2020-02-10', invoice_currency: 'USD', document_type: 'RV',
-    posting_id: 1, total_open_amount: 54273.28, baseline_create_date: '2020-01-26', cust_payment_terms: 'NAH4', invoice_id: 1930438491 },
-    { id: 3, business_code: 'U001', cust_number: 200769623, clear_date: '2020-02-11', business_year: 2020, doc_id: 1930438491, 
-    posting_date: '2020-01-26', document_create_date: '2020-01-25', due_in_date: '2020-02-10', invoice_currency: 'USD', document_type: 'RV',
-    posting_id: 1, total_open_amount: 54273.28, baseline_create_date: '2020-01-26', cust_payment_terms: 'NAH4', invoice_id: 1930438491 },
-    { id: 4, business_code: 'U001', cust_number: 200769623, clear_date: '2020-02-11', business_year: 2020, doc_id: 1930438491, 
-    posting_date: '2020-01-26', document_create_date: '2020-01-25', due_in_date: '2020-02-10', invoice_currency: 'USD', document_type: 'RV',
-    posting_id: 1, total_open_amount: 54273.28, baseline_create_date: '2020-01-26', cust_payment_terms: 'NAH4', invoice_id: 1930438491 },
-    { id: 5, business_code: 'U001', cust_number: 200769623, clear_date: '2020-02-11', business_year: 2020, doc_id: 1930438491, 
-    posting_date: '2020-01-26', document_create_date: '2020-01-25', due_in_date: '2020-02-10', invoice_currency: 'USD', document_type: 'RV',
-    posting_id: 1, total_open_amount: 54273.28, baseline_create_date: '2020-01-26', cust_payment_terms: 'NAH4', invoice_id: 1930438491 },
-    { id: 6, business_code: 'U001', cust_number: 200769623, clear_date: '2020-02-11', business_year: 2020, doc_id: 1930438491, 
-    posting_date: '2020-01-26', document_create_date: '2020-01-25', due_in_date: '2020-02-10', invoice_currency: 'USD', document_type: 'RV',
-    posting_id: 1, total_open_amount: 54273.28, baseline_create_date: '2020-01-26', cust_payment_terms: 'NAH4', invoice_id: 1930438491 },
-    { id: 7, business_code: 'U001', cust_number: 200769623, clear_date: '2020-02-11', business_year: 2020, doc_id: 1930438491, 
-    posting_date: '2020-01-26', document_create_date: '2020-01-25', due_in_date: '2020-02-10', invoice_currency: 'USD', document_type: 'RV',
-    posting_id: 1, total_open_amount: 54273.28, baseline_create_date: '2020-01-26', cust_payment_terms: 'NAH4', invoice_id: 1930438491 },
-    { id: 8, business_code: 'U001', cust_number: 200769623, clear_date: '2020-02-11', business_year: 2020, doc_id: 1930438491, 
-    posting_date: '2020-01-26', document_create_date: '2020-01-25', due_in_date: '2020-02-10', invoice_currency: 'USD', document_type: 'RV',
-    posting_id: 1, total_open_amount: 54273.28, baseline_create_date: '2020-01-26', cust_payment_terms: 'NAH4', invoice_id: 1930438491 },
-    { id: 9, business_code: 'U001', cust_number: 200769623, clear_date: '2020-02-11', business_year: 2020, doc_id: 1930438491, 
-    posting_date: '2020-01-26', document_create_date: '2020-01-25', due_in_date: '2020-02-10', invoice_currency: 'USD', document_type: 'RV',
-    posting_id: 1, total_open_amount: 54273.28, baseline_create_date: '2020-01-26', cust_payment_terms: 'NAH4', invoice_id: 1930438491 },
-    { id: 10, business_code: 'U001', cust_number: 200769623, clear_date: '2020-02-11', business_year: 2020, doc_id: 1930438491, 
-    posting_date: '2020-01-26', document_create_date: '2020-01-25', due_in_date: '2020-02-10', invoice_currency: 'USD', document_type: 'RV',
-    posting_id: 1, total_open_amount: 54273.28, baseline_create_date: '2020-01-26', cust_payment_terms: 'NAH4', invoice_id: 1930438491 },
-    { id: 11, business_code: 'U001', cust_number: 200769623, clear_date: '2020-02-11', business_year: 2020, doc_id: 1930438491, 
-    posting_date: '2020-01-26', document_create_date: '2020-01-25', due_in_date: '2020-02-10', invoice_currency: 'USD', document_type: 'RV',
-    posting_id: 1, total_open_amount: 54273.28, baseline_create_date: '2020-01-26', cust_payment_terms: 'NAH4', invoice_id: 1930438491 },
-    { id: 12, business_code: 'U001', cust_number: 200769623, clear_date: '2020-02-11', business_year: 2020, doc_id: 1930438491, 
-    posting_date: '2020-01-26', document_create_date: '2020-01-25', due_in_date: '2020-02-10', invoice_currency: 'USD', document_type: 'RV',
-    posting_id: 1, total_open_amount: 54273.28, baseline_create_date: '2020-01-26', cust_payment_terms: 'NAH4', invoice_id: 1930438491 },
-    { id: 13, business_code: 'U001', cust_number: 200769623, clear_date: '2020-02-11', business_year: 2020, doc_id: 1930438491, 
-    posting_date: '2020-01-26', document_create_date: '2020-01-25', due_in_date: '2020-02-10', invoice_currency: 'USD', document_type: 'RV',
-    posting_id: 1, total_open_amount: 54273.28, baseline_create_date: '2020-01-26', cust_payment_terms: 'NAH4', invoice_id: 1930438491 },
-    { id: 14, business_code: 'U001', cust_number: 200769623, clear_date: '2020-02-11', business_year: 2020, doc_id: 1930438491, 
-    posting_date: '2020-01-26', document_create_date: '2020-01-25', due_in_date: '2020-02-10', invoice_currency: 'USD', document_type: 'RV',
-    posting_id: 1, total_open_amount: 54273.28, baseline_create_date: '2020-01-26', cust_payment_terms: 'NAH4', invoice_id: 1930438491 },
-    { id: 15, business_code: 'U001', cust_number: 200769623, clear_date: '2020-02-11', business_year: 2020, doc_id: 1930438491, 
-    posting_date: '2020-01-26', document_create_date: '2020-01-25', due_in_date: '2020-02-10', invoice_currency: 'USD', document_type: 'RV',
-    posting_id: 1, total_open_amount: 54273.28, baseline_create_date: '2020-01-26', cust_payment_terms: 'NAH4', invoice_id: 1930438491 },
-];
-
-
-export default function DataTable() {
+export default function DataTable({ searchInput }) {
   const [pageSize, setPageSize] = React.useState(10);
   
   const [data, setData] = React.useState([]);
@@ -119,11 +70,14 @@ export default function DataTable() {
     setData(await getData());
   }, [])
 
+  const rows = searchInput
+    ? data.filter((data) => data.cust_number.toString().match(new RegExp("^" + searchInput, "gi")))
+    : data;
+
     return (
       <div style={{ width: '100%' }}>
         <DataGrid
-            //rows={rows} 
-            rows={data}
+            rows={rows}
             columns={columns}
             checkboxSelection={true}
             autoHeight={true}

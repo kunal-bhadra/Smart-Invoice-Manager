@@ -1,4 +1,5 @@
 import './App.css';
+import { useState } from 'react';
 import Container from '@mui/material/Container';
 import Grid from "@mui/material/Grid";
 import DataTable from "./components/table";
@@ -10,7 +11,9 @@ import HRClogo from "./components/hrclogo"
 import ABClogo from "./components/abclogo";
 
 
+
 function App() {
+  const [searchInput, setSearchInput] = useState("");
   return (
     <div className="App">
       <Container maxWidth="false" disableGutters="true">
@@ -20,11 +23,11 @@ function App() {
         </Grid>
         <Grid container spacing={0}>
           <LeftButtonGroup />
-          <SearchInput />
+          <SearchInput searchInput={searchInput} setSearchInput={setSearchInput} />
           <RightButtonGroup />
         </Grid>
         <Grid container spacing={0}>
-          <DataTable />
+          <DataTable searchInput={searchInput} />
           <TableFooter />
         </Grid>
       </Container>
