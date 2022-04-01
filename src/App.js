@@ -14,6 +14,13 @@ import ABClogo from "./components/abclogo";
 
 function App() {
   const [searchInput, setSearchInput] = useState("");
+   
+  const [advanceSearch, setAdvanceSearch] = useState(false);
+  const [searchDocID, setSearchDocID] = useState(""); 
+  const [searchInvoiceID, setSearchInvoiceID] = useState(""); 
+  const [searchCustNum, setSearchCustNum] = useState(""); 
+  const [searchBizzYear, setSearchBizzYear] = useState(""); 
+
   return (
     <div className="App">
       <Container maxWidth="false" disableGutters="true">
@@ -22,12 +29,33 @@ function App() {
           <HRClogo />
         </Grid>
         <Grid container spacing={0}>
-          <LeftButtonGroup />
-          <SearchInput searchInput={searchInput} setSearchInput={setSearchInput} />
+          <LeftButtonGroup 
+            advanceSearch={advanceSearch}
+            setAdvanceSearch={setAdvanceSearch}
+            searchDocID={searchDocID}
+            setSearchDocID={setSearchDocID}
+            searchInvoiceID={searchInvoiceID}
+            setSearchInvoiceID={setSearchInvoiceID}
+            searchCustNum={searchCustNum}
+            setSearchCustNum={setSearchCustNum}
+            searchBizzYear={searchBizzYear}
+            setSearchBizzYear={setSearchBizzYear}
+          />
+          <SearchInput 
+            searchInput={searchInput} 
+            setSearchInput={setSearchInput} 
+          />
           <RightButtonGroup />
         </Grid>
         <Grid container spacing={0}>
-          <DataTable searchInput={searchInput} />
+          <DataTable 
+            searchInput={searchInput} 
+            advanceSearch={advanceSearch}
+            searchDocID={searchDocID}
+            searchInvoiceID={searchInvoiceID}
+            searchCustNum={searchCustNum}
+            searchBizzYear={searchBizzYear}
+          />
           <TableFooter />
         </Grid>
       </Container>

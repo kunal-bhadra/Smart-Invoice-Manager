@@ -3,6 +3,8 @@ import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Grid from "@mui/material/Grid";
 import { styled } from "@mui/system";
+import AdvanceSearch from "./advancesearch";
+
 
 
 const StyledButtonGroup = styled(ButtonGroup, {})({
@@ -31,13 +33,36 @@ const StyledButton = styled(Button, {})({
 });
 
 
-export default function LeftButtonGroup() {
+export default function LeftButtonGroup({ 
+    advanceSearch,
+    setAdvanceSearch,
+    searchDocID,
+    setSearchDocID,
+    searchInvoiceID,
+    setSearchInvoiceID,
+    searchCustNum,
+    setSearchCustNum,
+    searchBizzYear,
+    setSearchBizzYear,
+}) {
     return (
         <Grid item xs={4.5}>
             <StyledButtonGroup variant="outlined">
                 <StyledButton>Predict</StyledButton>
                 <StyledButton>Analytics View</StyledButton>
-                <StyledButton>Advance Search</StyledButton>
+                <AdvanceSearch 
+                    advanceSearch={advanceSearch}
+                    setAdvanceSearch={setAdvanceSearch}
+                    searchDocID={searchDocID}
+                    setSearchDocID={setSearchDocID}
+                    searchInvoiceID={searchInvoiceID}
+                    setSearchInvoiceID={setSearchInvoiceID}
+                    searchCustNum={searchCustNum}
+                    setSearchCustNum={setSearchCustNum}
+                    searchBizzYear={searchBizzYear}
+                    setSearchBizzYear={setSearchBizzYear}
+                />
+                {/* <StyledButton>Advance Search</StyledButton> */}
             </StyledButtonGroup>
         </Grid>
     );

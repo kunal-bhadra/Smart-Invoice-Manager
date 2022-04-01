@@ -43,7 +43,7 @@ const datagridSx = {
 
 
 const columns = [
-    { field: 'id', headerName: 'Sl No', width: 45, align: "center", headerAlign: 'center' },
+    { field: 'id', headerName: 'Sl No', width: 60, align: "center", headerAlign: 'center' },
     { field: 'business_code', headerName: 'Business Code', width: 90, align: "center", headerAlign: 'center' },
     { field: 'cust_number', headerName: 'Customer Number', width: 90, align: "center", headerAlign: 'center' },
     { field: 'clear_date', headerName: 'Clear Date', width: 90, align: "center", headerAlign: 'center' },
@@ -62,7 +62,14 @@ const columns = [
 ];
 
 
-export default function DataTable({ searchInput }) {
+export default function DataTable({ 
+  searchInput, 
+  advanceSearch,
+  searchDocID,
+  searchInvoiceID,
+  searchCustNum,
+  searchBizzYear,
+}) {
   const [pageSize, setPageSize] = React.useState(10);
   
   const [data, setData] = React.useState([]);
@@ -70,9 +77,27 @@ export default function DataTable({ searchInput }) {
     setData(await getData());
   }, [])
 
-  const rows = searchInput
-    ? data.filter((data) => data.cust_number.toString().match(new RegExp("^" + searchInput, "gi")))
-    : data;
+  // const rows = searchInput
+  //   ? data.filter((data) => data.cust_number.toString().match(new RegExp("^" + searchInput, "gi")))
+  //   : data;
+
+
+  let rows=[]
+  if (advanceSearch === true) {
+    rows = data.filter((item) => {
+      return (
+        item.doc_id.toString().match(new RegExp("^" + searchDocID, "gi")) &&
+        item.invoice_id.toString().match(new RegExp("^" + searchInvoiceID, "gi")) &&
+        item.cust_number.toString().match(new RegExp("^" + searchCustNum, "gi")) &&
+        item.buisness_year.toString().match(new RegExp("^" + searchBizzYear, "gi"))
+      )
+    });
+  } else {
+    rows = searchInput
+      ? data.filter((item) => item.cust_number.toString().match(new RegExp("^" + searchInput, "gi")))
+      : data;
+  }
+  
 
     return (
       <div style={{ width: '100%' }}>
