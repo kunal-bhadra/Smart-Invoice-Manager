@@ -3,6 +3,9 @@ import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Grid from "@mui/material/Grid";
 import { styled } from "@mui/system";
+import Add from "./addbutton";
+import Edit from "./editbutton";
+import Delete from "./deletebutton";
 
 
 const StyledButtonGroup = styled(ButtonGroup, {})({
@@ -35,9 +38,9 @@ export default function RightButtonGroup() {
     return (
         <Grid item xs={4.5}>
             <StyledButtonGroup variant="outlined" >
-                <StyledButton>Add</StyledButton>
-                <StyledButton>Edit</StyledButton>
-                <StyledButton>Delete</StyledButton>
+                <Add />
+                <Edit />
+                <Delete />
             </StyledButtonGroup>
         </Grid>
     );

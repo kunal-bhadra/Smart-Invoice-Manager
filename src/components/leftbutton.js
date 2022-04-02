@@ -21,7 +21,7 @@ const StyledButton = styled(Button, {})({
     borderColor: "rgba(21,175,241,255)",
     fontSize: 13,
     margin: 0,
-    borderRadius: 10, 
+    borderRadius: 0, 
     height: 30,
     width: 150,
     display: "flex",

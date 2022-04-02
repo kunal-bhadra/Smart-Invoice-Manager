@@ -5,7 +5,6 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import { styled } from "@mui/system";
 import Grid from "@mui/material/Grid";
@@ -39,7 +38,10 @@ const StyledButton = styled(Button, {})({
     borderColor: "rgba(21,175,241,255)",
     fontSize: 13,
     margin: 0,
-    borderRadius: 10, 
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 10,
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 10,
     height: 30,
     width: 150,
     display: "flex",
