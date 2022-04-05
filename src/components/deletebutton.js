@@ -71,7 +71,7 @@ export default function Delete() {
         <StyledButton onClick={handleClickOpen}>
           Delete
         </StyledButton>
-        <Dialog open={open} onClose={handleClose} sx={popupSx} fullWidth='true' maxWidth='sm'>
+        <Dialog open={open} onClose={handleClose} sx={popupSx} fullWidth={true} maxWidth='sm'>
             <DialogTitle>Delete Records?</DialogTitle>
             <DialogContent>
                 <DialogContentText sx={{color:"rgb(218,225,227)"}}>

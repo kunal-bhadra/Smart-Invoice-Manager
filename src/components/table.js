@@ -107,7 +107,7 @@ export default function DataTable({
             checkboxSelection={true}
             autoHeight={true}
             density='compact'
-            rowHeight='40'
+            rowHeight={40}
             headerHeight={80}
             disableColumnMenu={true}
             disableSelectionOnClick={true}

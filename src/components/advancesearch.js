@@ -87,7 +87,7 @@ export default function AdvanceSearch({
       <StyledButton onClick={handleClickOpen}>
         Advance Search
       </StyledButton>
-      <Dialog open={open} onClose={handleClose} sx={popupSx} fullWidth='true' >
+      <Dialog open={open} onClose={handleClose} sx={popupSx} fullWidth={true} >
         <DialogTitle>Advance Search</DialogTitle>
         <DialogContent>
             <Grid container rowSpacing={0} columnSpacing={3.5}>

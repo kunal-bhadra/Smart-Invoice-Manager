@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -7,10 +8,13 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Box from '@mui/material/Box';
 import { styled } from "@mui/system";
+import dayjs from 'dayjs';
 import Grid from "@mui/material/Grid";
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
+import axios from "axios";
+
 
 
 const popupSx = {
@@ -59,27 +63,100 @@ const StyledButton = styled(Button, {})({
 export default function Add() {
   const [open, setOpen] = React.useState(false);
   
-
   const handleClickOpen = () => {
     setOpen(true);
   };
-
   const handleClose = () => {
     setOpen(false);
   };
 
-  const [value, setValue] = React.useState(new Date('2022-01-10T21:11:54'));
 
-  const handleChange = (newValue) => {
-    setValue(newValue);
+  const addRecord = () => {
+    let data = JSON.stringify({
+        business_code: addBizzCode,
+        cust_number: addCustNumber,
+        clear_date: dayjs(addClearDate).format('YYYY-MM-DD'),
+        buisness_year: addBizzYear,
+        doc_id: addDocId,
+        posting_date: dayjs(addPostingDate).format('YYYY-MM-DD'),
+        document_create_date: dayjs(addDocCreateDate).format('YYYY-MM-DD'),
+        due_in_date: dayjs(addDueDate).format('YYYY-MM-DD'),
+        invoice_currency: addInvoiceCurrency,
+        document_type: addDocType,
+        posting_id: addPostingId,
+        total_open_amount: addTotalOpenAmount,
+        baseline_create_date: dayjs(addBaselineCreateDate).format('YYYY-MM-DD'),
+        cust_payment_terms: addCustPaymentTerms,
+        invoice_id: addInvoiceId
+        });
+        
+    axios.post(
+        "http://localhost:8080/h2h-backend/insert",
+        data,
+        {headers:{"Content-Type" : "application/json"}}
+        ).catch(function (error) {
+            let e = error;
+            if (error.response) {
+                e = error.response.data;                   // data, status, headers
+                if (error.response.data && error.response.data.error) {
+                    e = error.response.data.error;           // my app specific keys override
+                }
+            } else if (error.message) {
+                e = error.message;
+            } else {
+                e = "Unknown error occured";
+            }
+            return e;
+        });
+    
+        setOpen(false);
   };
+
+
+  
+
+
+  const [addBizzCode, setAddBizzCode] = useState("");
+  const [addCustNumber, setAddCustNumber] = useState(0);
+  const [addClearDate, setAddClearDate] = useState(new Date('2022-01-10'));
+  const [addBizzYear, setAddBizzYear] = useState(0);
+  const [addDocId, setAddDocId] = useState("");
+  const [addPostingDate, setAddPostingDate] = useState(new Date('2022-01-10'));
+  const [addDocCreateDate, setAddDocCreateDate] = useState(new Date('2022-01-10'));
+  const [addDueDate, setAddDueDate] = useState(new Date('2022-01-10'));
+  const [addInvoiceCurrency, setAddInvoiceCurrency] = useState("");
+  const [addDocType, setAddDocType] = useState("");
+  const [addPostingId, setAddPostingId] = useState("");
+  const [addTotalOpenAmount, setAddTotalOpenAmount] = useState("");
+  const [addBaselineCreateDate, setAddBaselineCreateDate] = useState(new Date('2022-01-10'));
+  const [addCustPaymentTerms, setAddCustPaymentTerms] = useState("");
+  const [addInvoiceId, setAddInvoiceId] = useState("");
+
+  
+  const clearDateChange = (newCDValue) => {
+    setAddClearDate(newCDValue);
+  };
+  const postingDateChange = (newPDValue) => {
+    setAddPostingDate(newPDValue);
+  };
+  const docCreateDateChange = (newDCDValue) => {
+    setAddDocCreateDate(newDCDValue);
+  };
+  const dueDateChange = (newDDValue) => {
+    setAddDueDate(newDDValue);
+  };
+  const baselineCreateDateChange = (newBCDValue) => {
+    setAddBaselineCreateDate(newBCDValue);
+  };
+
+
   
   return (
     <div>
       <StyledButton onClick={handleClickOpen}>
         Add
       </StyledButton>
-      <Dialog open={open} onClose={handleClose} sx={popupSx} fullWidth='true' maxWidth='xl'>
+      <Dialog open={open} onClose={handleClose} sx={popupSx} fullWidth={true} maxWidth='xl'>
         <DialogTitle>Add</DialogTitle>
         <DialogContent>
             <Grid container rowSpacing={0} columnSpacing={4.5}>
@@ -102,7 +179,7 @@ export default function Add() {
                     size="small" 
                     sx={{input: {textAlign: "left"}}} 
                     onChange={(event) => {
-                        // setSearchDocID(event.target.value);
+                        setAddBizzCode(event.target.value);
                     }}
                     />
                     </Box>
@@ -126,7 +203,7 @@ export default function Add() {
                     size="small" 
                     sx={{input: {textAlign: "left"}}} 
                     onChange={(event) => {
-                        // setSearchInvoiceID(event.target.value);
+                        setAddCustNumber(event.target.value);
                     }}
                     />
                     </Box>
@@ -151,8 +228,8 @@ export default function Add() {
                             <DesktopDatePicker
                                 label="Clear Date"
                                 inputFormat="MM/dd/yyyy"
-                                value={value}
-                                onChange={handleChange}
+                                value={addClearDate}
+                                onChange={clearDateChange}
                                 InputProps={{
                                     disableUnderline: true
                                   }}
@@ -190,7 +267,7 @@ export default function Add() {
                         sx={{
                             input: {textAlign: "left"}}} 
                         onChange={(event) => {
-                            // setSearchBizzYear(event.target.value);
+                            setAddBizzYear(event.target.value);
                         }}
                         />
                     </Box>
@@ -215,7 +292,7 @@ export default function Add() {
                         sx={{
                             input: {textAlign: "left"}}} 
                         onChange={(event) => {
-                            // setSearchBizzYear(event.target.value);
+                            setAddDocId(event.target.value);
                         }}
                         />
                     </Box>
@@ -240,8 +317,8 @@ export default function Add() {
                             <DesktopDatePicker
                                 label="Posting Date"
                                 inputFormat="MM/dd/yyyy"
-                                value={value}
-                                onChange={handleChange}
+                                value={addPostingDate}
+                                onChange={postingDateChange}
                                 InputProps={{
                                     disableUnderline: true
                                   }}
@@ -279,8 +356,8 @@ export default function Add() {
                             <DesktopDatePicker
                                 label="Document Create Date"
                                 inputFormat="MM/dd/yyyy"
-                                value={value}
-                                onChange={handleChange}
+                                value={addDocCreateDate}
+                                onChange={docCreateDateChange}
                                 InputProps={{
                                     disableUnderline: true
                                   }}
@@ -318,8 +395,8 @@ export default function Add() {
                             <DesktopDatePicker
                                 label="Due Date"
                                 inputFormat="MM/dd/yyyy"
-                                value={value}
-                                onChange={handleChange}
+                                value={addDueDate}
+                                onChange={dueDateChange}
                                 InputProps={{
                                     disableUnderline: true
                                   }}
@@ -357,7 +434,7 @@ export default function Add() {
                         sx={{
                             input: {textAlign: "left"}}} 
                         onChange={(event) => {
-                            // setSearchBizzYear(event.target.value);
+                            setAddInvoiceCurrency(event.target.value);
                         }}
                         />
                     </Box>
@@ -382,7 +459,7 @@ export default function Add() {
                         sx={{
                             input: {textAlign: "left"}}} 
                         onChange={(event) => {
-                            // setSearchBizzYear(event.target.value);
+                            setAddDocType(event.target.value);
                         }}
                         />
                     </Box>
@@ -407,7 +484,7 @@ export default function Add() {
                         sx={{
                             input: {textAlign: "left"}}} 
                         onChange={(event) => {
-                            // setSearchBizzYear(event.target.value);
+                            setAddPostingId(event.target.value);
                         }}
                         />
                     </Box>
@@ -432,7 +509,7 @@ export default function Add() {
                         sx={{
                             input: {textAlign: "left"}}} 
                         onChange={(event) => {
-                            // setSearchBizzYear(event.target.value);
+                            setAddTotalOpenAmount(event.target.value);
                         }}
                         />
                     </Box>
@@ -457,8 +534,8 @@ export default function Add() {
                             <DesktopDatePicker
                                 label="Baseline Create Date"
                                 inputFormat="MM/dd/yyyy"
-                                value={value}
-                                onChange={handleChange}
+                                value={addBaselineCreateDate}
+                                onChange={baselineCreateDateChange}
                                 InputProps={{
                                     disableUnderline: true
                                   }}
@@ -496,7 +573,7 @@ export default function Add() {
                         sx={{
                             input: {textAlign: "left"}}} 
                         onChange={(event) => {
-                            // setSearchBizzYear(event.target.value);
+                            setAddCustPaymentTerms(event.target.value);
                         }}
                         />
                     </Box>
@@ -521,7 +598,7 @@ export default function Add() {
                         sx={{
                             input: {textAlign: "left"}}} 
                         onChange={(event) => {
-                            // setSearchBizzYear(event.target.value);
+                            setAddInvoiceId(event.target.value);
                         }}
                         />
                     </Box>
@@ -529,7 +606,7 @@ export default function Add() {
             </Grid>
         </DialogContent>
         <DialogActions >
-            <StyledBottomButton onClick={handleClose}>Add</StyledBottomButton>
+            <StyledBottomButton onClick={addRecord}>Add</StyledBottomButton>
             <StyledBottomButton onClick={handleClose}>Cancel</StyledBottomButton>
         </DialogActions>
       </Dialog>
