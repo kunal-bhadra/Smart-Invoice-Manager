@@ -70,7 +70,7 @@ export default function Edit() {
         <StyledButton onClick={handleClickOpen}>
           Edit
         </StyledButton>
-        <Dialog open={open} onClose={handleClose} sx={popupSx} fullWidth='true' maxWidth='sm'>
+        <Dialog open={open} onClose={handleClose} sx={popupSx} fullWidth={true} maxWidth='sm'>
           <DialogTitle>Edit</DialogTitle>
           <DialogContent>
               <Grid container rowSpacing={0} columnSpacing={4}>
