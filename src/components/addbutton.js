@@ -70,7 +70,7 @@ export default function Add() {
     setOpen(false);
   };
 
-
+ 
   const addRecord = () => {
     let data = JSON.stringify({
         business_code: addBizzCode,
