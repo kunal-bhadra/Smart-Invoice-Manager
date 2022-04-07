@@ -69,6 +69,8 @@ export default function DataTable({
   searchInvoiceID,
   searchCustNum,
   searchBizzYear,
+  setEditID,
+  setDisableEdit
 }) {
   const [pageSize, setPageSize] = React.useState(10);
   
@@ -104,7 +106,6 @@ export default function DataTable({
         <DataGrid
             rows={rows}
             columns={columns}
-            checkboxSelection={true}
             autoHeight={true}
             density='compact'
             rowHeight={40}
@@ -112,6 +113,21 @@ export default function DataTable({
             disableColumnMenu={true}
             disableSelectionOnClick={true}
             sx={datagridSx}
+            
+            checkboxSelection={true}
+            onSelectionModelChange={itm => {
+              let idSet = new Set(itm)
+              const [first] = idSet;
+              setEditID(first);
+              // console.log(setEditID);
+
+              if (idSet.size === 0){
+                setDisableEdit(true);
+              } else {
+                setDisableEdit(false);
+              }
+              // console.log(setDisableEdit);
+            }}
 
             pageSize={pageSize}
             onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}

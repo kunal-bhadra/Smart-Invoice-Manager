@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -8,6 +9,8 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Box from '@mui/material/Box';
 import { styled } from "@mui/system";
 import Grid from "@mui/material/Grid";
+import axios from "axios";
+
 
 
 const popupSx = {
@@ -49,11 +52,18 @@ const StyledButton = styled(Button, {})({
     justifyContent: "space-around",
     ':hover': {
         backgroundColor: 'rgba(21,175,241,255)',
-      }
+      },
+    ':disabled': {
+      color: "rgb(218,225,227)",
+    }
 });
 
 
-export default function Edit() {
+
+export default function Edit({
+    editID,
+    disableEdit,
+}) {
     const [open, setOpen] = React.useState(false);
     
   
@@ -64,10 +74,45 @@ export default function Edit() {
     const handleClose = () => {
       setOpen(false);
     };
+
+
+    const editRecord = () => {
+      let data = JSON.stringify({
+          id: editID,
+          invoice_currency: editInvoiceCurrency,
+          cust_payment_terms: editCustPaymentTerms
+          });
+          
+      axios.post(
+          "http://localhost:8080/h2h-backend/edit",
+          data,
+          {headers:{"Content-Type" : "application/json"}}
+          ).catch(function (error) {
+              let e = error;
+              if (error.response) {
+                  e = error.response.data;                   // data, status, headers
+                  if (error.response.data && error.response.data.error) {
+                      e = error.response.data.error;           // my app specific keys override
+                  }
+              } else if (error.message) {
+                  e = error.message;
+              } else {
+                  e = "Unknown error occured";
+              }
+              return e;
+          });
+      
+          setOpen(false);
+    };
+
+
+    const [editInvoiceCurrency, setEditInvoiceCurrency] = useState("");
+    const [editCustPaymentTerms, setEditCustPaymentTerms] = useState("");
+
     
     return (
       <div>
-        <StyledButton onClick={handleClickOpen}>
+        <StyledButton disabled={disableEdit} onClick={handleClickOpen} >
           Edit
         </StyledButton>
         <Dialog open={open} onClose={handleClose} sx={popupSx} fullWidth={true} maxWidth='sm'>
@@ -93,7 +138,7 @@ export default function Edit() {
                             size="small" 
                             sx={{input: {textAlign: "left"}}} 
                             onChange={(event) => {
-                                // setSearchDocID(event.target.value);
+                              setEditInvoiceCurrency(event.target.value);
                             }}
                         />
                       </Box>
@@ -117,7 +162,7 @@ export default function Edit() {
                             size="small" 
                             sx={{input: {textAlign: "left"}}} 
                             onChange={(event) => {
-                                // setSearchDocID(event.target.value);
+                              setEditCustPaymentTerms(event.target.value);
                             }}
                         />
                       </Box>
@@ -125,7 +170,7 @@ export default function Edit() {
                 </Grid>
             </DialogContent>
             <DialogActions >
-                <StyledBottomButton onClick={handleClose}>Edit</StyledBottomButton>
+                <StyledBottomButton onClick={editRecord}>Edit</StyledBottomButton>
                 <StyledBottomButton onClick={handleClose}>Cancel</StyledBottomButton>
             </DialogActions>
         </Dialog>

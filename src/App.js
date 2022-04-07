@@ -20,6 +20,9 @@ function App() {
   const [searchInvoiceID, setSearchInvoiceID] = useState(""); 
   const [searchCustNum, setSearchCustNum] = useState(""); 
   const [searchBizzYear, setSearchBizzYear] = useState(""); 
+
+  const [editID, setEditID] = useState("");
+  const [disableEdit, setDisableEdit] = useState(true);
    
   return (
     <div className="App">
@@ -45,7 +48,10 @@ function App() {
             searchInput={searchInput} 
             setSearchInput={setSearchInput} 
           />
-          <RightButtonGroup />
+          <RightButtonGroup 
+            editID={editID}
+            disableEdit={disableEdit}
+          />
         </Grid>
         <Grid container spacing={0}>
           <DataTable 
@@ -55,6 +61,8 @@ function App() {
             searchInvoiceID={searchInvoiceID}
             searchCustNum={searchCustNum}
             searchBizzYear={searchBizzYear}
+            setEditID={setEditID}
+            setDisableEdit={setDisableEdit}
           />
           <TableFooter />
         </Grid>
@@ -64,4 +72,4 @@ function App() {
 }
 
 
-export default App;
+export default App; 

@@ -34,12 +34,18 @@ const StyledButton = styled(Button, {})({
 });
 
 
-export default function RightButtonGroup() {
+export default function RightButtonGroup({
+    editID,
+    disableEdit
+}) {
     return (
         <Grid item xs={4.5}>
             <StyledButtonGroup variant="outlined" >
                 <Add />
-                <Edit />
+                <Edit 
+                    editID={editID}
+                    disableEdit={disableEdit}
+                />
                 <Delete />
             </StyledButtonGroup>
         </Grid>
