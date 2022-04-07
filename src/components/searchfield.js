@@ -1,15 +1,13 @@
 import * as React from 'react';
-import { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Grid from "@mui/material/Grid";
-import { styled } from "@mui/system";
 
 
 export default function SearchInput({ searchInput, setSearchInput }) {
 
   return (
-    <Grid item xs={3}>
+    <Grid item xs={2}>
         <Box mt={1.6}
             component="form"
             sx={{

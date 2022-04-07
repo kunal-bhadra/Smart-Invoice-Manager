@@ -39,7 +39,7 @@ export default function RightButtonGroup({
     disableEdit
 }) {
     return (
-        <Grid item xs={4.5}>
+        <Grid item xs={5}>
             <StyledButtonGroup variant="outlined" >
                 <Add />
                 <Edit 

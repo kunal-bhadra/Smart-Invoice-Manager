@@ -62,7 +62,6 @@ export default function LeftButtonGroup({
                     searchBizzYear={searchBizzYear}
                     setSearchBizzYear={setSearchBizzYear}
                 />
-                {/* <StyledButton>Advance Search</StyledButton> */}
             </StyledButtonGroup>
         </Grid>
     );

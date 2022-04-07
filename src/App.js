@@ -5,6 +5,7 @@ import Grid from "@mui/material/Grid";
 import DataTable from "./components/table";
 import TableFooter from "./components/tablefooter";
 import LeftButtonGroup from "./components/leftbutton";
+import RefreshButton from "./components/refreshbutton"
 import RightButtonGroup from "./components/rightbutton";
 import SearchInput from "./components/searchfield";
 import HRClogo from "./components/hrclogo"
@@ -44,6 +45,7 @@ function App() {
             searchBizzYear={searchBizzYear}
             setSearchBizzYear={setSearchBizzYear}
           />
+          <RefreshButton />
           <SearchInput 
             searchInput={searchInput} 
             setSearchInput={setSearchInput} 
@@ -72,4 +74,4 @@ function App() {
 }
 
 
-export default App;  
+export default App;   
