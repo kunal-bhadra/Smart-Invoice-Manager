@@ -90,9 +90,9 @@ export default function Edit({
           ).catch(function (error) {
               let e = error;
               if (error.response) {
-                  e = error.response.data;                   // data, status, headers
+                  e = error.response.data;                   
                   if (error.response.data && error.response.data.error) {
-                      e = error.response.data.error;           // my app specific keys override
+                      e = error.response.data.error;          
                   }
               } else if (error.message) {
                   e = error.message;

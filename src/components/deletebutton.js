@@ -6,7 +6,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { styled } from "@mui/system";
-
+import axios from "axios";
 
 const popupSx = {
     '& .MuiDialog-paper': {
@@ -47,13 +47,19 @@ const StyledButton = styled(Button, {})({
     justifyContent: "space-around",
     ':hover': {
         backgroundColor: 'rgba(21,175,241,255)',
+      },
+      ':disabled': {
+        color: "rgb(218,225,227)",
       }
 });
 
 
 
 
-export default function Delete() {
+export default function Delete({
+    editID,
+    disableEdit,
+}) {
     const [open, setOpen] = React.useState(false);
     
   
@@ -65,21 +71,49 @@ export default function Delete() {
       setOpen(false);
     };
 
+
+    const deleteRecord = () => {
+      let data = JSON.stringify({
+          id: editID,
+          });
+          
+      axios.post(
+          "http://localhost:8080/h2h-backend/delete",
+          data,
+          {headers:{"Content-Type" : "application/json"}}
+          ).catch(function (error) {
+              let e = error;
+              if (error.response) {
+                  e = error.response.data;                   
+                  if (error.response.data && error.response.data.error) {
+                      e = error.response.data.error;          
+                  }
+              } else if (error.message) {
+                  e = error.message;
+              } else {
+                  e = "Unknown error occured";
+              }
+              return e;
+          });
+      
+          setOpen(false);
+     };
+
     
     return (
       <div>
-        <StyledButton onClick={handleClickOpen}>
+        <StyledButton disabled={disableEdit} onClick={handleClickOpen}>
           Delete
         </StyledButton>
         <Dialog open={open} onClose={handleClose} sx={popupSx} fullWidth={true} maxWidth='sm'>
-            <DialogTitle>Delete Records?</DialogTitle>
+            <DialogTitle>Delete Record?</DialogTitle>
             <DialogContent>
                 <DialogContentText sx={{color:"rgb(218,225,227)"}}>
-                    Are you sure you want to delete these record[s]?
+                    Are you sure you want to delete this record?
                 </DialogContentText>
             </DialogContent>
             <DialogActions >
-                <StyledBottomButton onClick={handleClose}>Delete</StyledBottomButton>
+                <StyledBottomButton onClick={deleteRecord}>Delete</StyledBottomButton>
                 <StyledBottomButton onClick={handleClose}>Cancel</StyledBottomButton>
             </DialogActions>
         </Dialog>

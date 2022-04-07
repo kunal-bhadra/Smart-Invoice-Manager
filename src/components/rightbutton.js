@@ -46,7 +46,10 @@ export default function RightButtonGroup({
                     editID={editID}
                     disableEdit={disableEdit}
                 />
-                <Delete />
+                <Delete 
+                    editID={editID}
+                    disableEdit={disableEdit}
+                />
             </StyledButtonGroup>
         </Grid>
     );
