@@ -70,7 +70,8 @@ export default function DataTable({
   searchCustNum,
   searchBizzYear,
   setEditID,
-  setDisableEdit
+  setDisableEdit,
+  setPredDocId,
 }) {
   const [pageSize, setPageSize] = React.useState(10);
   
@@ -78,10 +79,6 @@ export default function DataTable({
   useEffect(async () => {
     setData(await getData());
   }, [])
-
-  // const rows = searchInput
-  //   ? data.filter((data) => data.cust_number.toString().match(new RegExp("^" + searchInput, "gi")))
-  //   : data;
 
 
   let rows=[]
@@ -119,7 +116,15 @@ export default function DataTable({
               let idSet = new Set(itm)
               const [first] = idSet;
               setEditID(first);
-              // console.log(setEditID);
+              // console.log(idSet);
+              let array = [...idSet];
+              // console.log(array);
+              setPredDocId(array);
+              console.log(setPredDocId);
+
+              // //print all data from table in console with id=first
+              // setPredDocId(data.filter(item => item.id === first)[0].doc_id);
+              // console.log(data.filter(item => item.id === first)[0].doc_id);
 
               if (idSet.size === 0){
                 setDisableEdit(true);

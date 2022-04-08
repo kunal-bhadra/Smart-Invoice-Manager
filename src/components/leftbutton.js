@@ -4,6 +4,7 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 import Grid from "@mui/material/Grid";
 import { styled } from "@mui/system";
 import AdvanceSearch from "./advancesearch";
+import Predict from "./predictbutton";
 
 
 
@@ -44,11 +45,18 @@ export default function LeftButtonGroup({
     setSearchCustNum,
     searchBizzYear,
     setSearchBizzYear,
+    editID,
+    disableEdit,
+    predDocId,
 }) {
     return (
         <Grid item xs={4.5} backgroundColor="rgba(39,61,74,255)">
             <StyledButtonGroup variant="outlined">
-                <StyledButton>Predict</StyledButton>
+                <Predict 
+                    editID={editID}
+                    disableEdit={disableEdit}
+                    predDocId={predDocId}
+                />
                 <StyledButton>Analytics View</StyledButton>
                 <AdvanceSearch 
                     advanceSearch={advanceSearch}

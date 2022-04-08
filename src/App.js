@@ -25,6 +25,8 @@ function App() {
 
   const [editID, setEditID] = useState("");
   const [disableEdit, setDisableEdit] = useState(true);
+
+  const [predDocId, setPredDocId] = useState("");
    
   return (
     <div className="App">
@@ -46,6 +48,9 @@ function App() {
             setSearchCustNum={setSearchCustNum}
             searchBizzYear={searchBizzYear}
             setSearchBizzYear={setSearchBizzYear}
+            editID={editID}
+            disableEdit={disableEdit}
+            predDocId={predDocId}
           />
           <RefreshButton />
           <SearchInput 
@@ -67,6 +72,7 @@ function App() {
             searchBizzYear={searchBizzYear}
             setEditID={setEditID}
             setDisableEdit={setDisableEdit}
+            setPredDocId={setPredDocId}
           />
           <TableFooter />
         </Grid>
