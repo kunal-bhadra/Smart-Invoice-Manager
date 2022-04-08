@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -8,6 +9,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Box from '@mui/material/Box';
 import { styled } from "@mui/system";
 import Grid from "@mui/material/Grid";
+import Alert from '@mui/material/Alert';
 
 
 
@@ -66,7 +68,8 @@ export default function AdvanceSearch({
     setSearchBizzYear,
 }) {
   const [open, setOpen] = React.useState(false);
-  
+  const [errorMessage, setErrorMessage] = useState("");
+
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -76,10 +79,16 @@ export default function AdvanceSearch({
     setOpen(false);
   };
 
-  const doAdvanceSearch = () => {
-    setAdvanceSearch(true);
-    setOpen(false);
-  };
+
+  const checkAll = () => {
+    if(searchDocID !== "" && searchInvoiceID !== "" && searchCustNum !== "" && searchBizzYear !== ""){
+        setAdvanceSearch(true);
+        setOpen(false);
+    } else {
+        setErrorMessage('All fields not provided')
+    }
+  }
+
 
 
   return (
@@ -89,6 +98,7 @@ export default function AdvanceSearch({
       </StyledButton>
       <Dialog open={open} onClose={handleClose} sx={popupSx} fullWidth={true} >
         <DialogTitle>Advance Search</DialogTitle>
+        {errorMessage && <Alert severity="warning">Please enter values in all fields to do advance search!</Alert>}
         <DialogContent>
             <Grid container rowSpacing={0} columnSpacing={3.5}>
                 <Grid item xs={6}>
@@ -174,7 +184,7 @@ export default function AdvanceSearch({
             </Grid>
         </DialogContent>
         <DialogActions >
-            <StyledBottomButton onClick={doAdvanceSearch}>Search</StyledBottomButton>
+            <StyledBottomButton onClick={checkAll}>Search</StyledBottomButton>
             <StyledBottomButton onClick={handleClose}>Cancel</StyledBottomButton>
         </DialogActions>
       </Dialog>

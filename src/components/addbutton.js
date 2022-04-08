@@ -14,7 +14,7 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 import axios from "axios";
-
+import Alert from '@mui/material/Alert';
 
 
 const popupSx = {
@@ -62,6 +62,8 @@ const StyledButton = styled(Button, {})({
 
 export default function Add() {
   const [open, setOpen] = React.useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
   
   const handleClickOpen = () => {
     setOpen(true);
@@ -70,6 +72,15 @@ export default function Add() {
     setOpen(false);
   };
 
+
+  const checkAll = () => {
+    if (addBizzCode !== "" && addCustNumber !== 0 && addClearDate !== "" && addBizzYear !== 0 && addDocId !== "" && addPostingDate !== "" && addDocCreateDate !== "" && addDueDate !== "" && addInvoiceCurrency !== "" && addDocType !== "" && addPostingId !== "" && addTotalOpenAmount !== "" && addBaselineCreateDate !== "" && addCustPaymentTerms !== "" && addInvoiceId !== "") {
+        addRecord();
+        setOpen(false);
+    } else {
+        setErrorMessage('All fields not provided')
+    }
+  }
  
   const addRecord = () => {
     let data = JSON.stringify({
@@ -158,6 +169,7 @@ export default function Add() {
       </StyledButton>
       <Dialog open={open} onClose={handleClose} sx={popupSx} fullWidth={true} maxWidth='xl'>
         <DialogTitle>Add</DialogTitle>
+        {errorMessage && <Alert severity="warning">Please enter values in all fields to add this record!</Alert>}
         <DialogContent>
             <Grid container rowSpacing={0} columnSpacing={4.5}>
                 <Grid item xs={3}>
@@ -606,7 +618,7 @@ export default function Add() {
             </Grid>
         </DialogContent>
         <DialogActions >
-            <StyledBottomButton onClick={addRecord}>Add</StyledBottomButton>
+            <StyledBottomButton onClick={checkAll}>Add</StyledBottomButton>
             <StyledBottomButton onClick={handleClose}>Cancel</StyledBottomButton>
         </DialogActions>
       </Dialog>
