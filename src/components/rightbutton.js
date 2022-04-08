@@ -39,7 +39,7 @@ export default function RightButtonGroup({
     disableEdit
 }) {
     return (
-        <Grid item xs={5}>
+        <Grid item xs={5} backgroundColor="rgba(39,61,74,255)">
             <StyledButtonGroup variant="outlined" >
                 <Add />
                 <Edit 

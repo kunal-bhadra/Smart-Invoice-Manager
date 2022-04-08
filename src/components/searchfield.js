@@ -7,7 +7,7 @@ import Grid from "@mui/material/Grid";
 export default function SearchInput({ searchInput, setSearchInput }) {
 
   return (
-    <Grid item xs={2}>
+    <Grid item xs={2} backgroundColor="rgba(39,61,74,255)">
         <Box mt={1.6}
             component="form"
             sx={{

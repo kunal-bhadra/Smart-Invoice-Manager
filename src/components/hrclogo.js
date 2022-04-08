@@ -7,7 +7,7 @@ import whitelogo from "./hrc_logo.png"
 export default function HRClogo() {
     return (
       <Grid item xs={7}>
-          <Box mt={2} sx={{display: "flex", alignItems: "left"}} > 
+          <Box mt={1.3} sx={{display: "flex", alignItems: "left"}} > 
             <img
                 src = {whitelogo}
                 alt=""

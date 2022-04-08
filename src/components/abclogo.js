@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 export default function ABClogo() {
     return (
       <Grid item xs>
-          <Box ml={3} mt={2} sx={{display: "flex", alignItems: "left"}} > 
+          <Box ml={3} mt={1.3} sx={{display: "flex", alignItems: "left"}} > 
             <img
                 src = {abclogo}
                 alt=""

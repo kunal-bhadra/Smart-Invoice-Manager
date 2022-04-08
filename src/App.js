@@ -10,6 +10,7 @@ import RightButtonGroup from "./components/rightbutton";
 import SearchInput from "./components/searchfield";
 import HRClogo from "./components/hrclogo"
 import ABClogo from "./components/abclogo";
+import TableTitle from "./components/tabletitle"
 
 
 
@@ -31,6 +32,7 @@ function App() {
         <Grid container spacing={0}>
           <ABClogo />
           <HRClogo />
+          <TableTitle />
         </Grid>
         <Grid container spacing={0}>
           <LeftButtonGroup 
@@ -74,4 +76,4 @@ function App() {
 }
 
 
-export default App;   
+export default App;    

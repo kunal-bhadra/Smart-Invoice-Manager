@@ -46,7 +46,7 @@ export default function LeftButtonGroup({
     setSearchBizzYear,
 }) {
     return (
-        <Grid item xs={4.5}>
+        <Grid item xs={4.5} backgroundColor="rgba(39,61,74,255)">
             <StyledButtonGroup variant="outlined">
                 <StyledButton>Predict</StyledButton>
                 <StyledButton>Analytics View</StyledButton>

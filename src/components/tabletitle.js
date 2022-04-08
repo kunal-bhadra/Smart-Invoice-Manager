@@ -5,24 +5,24 @@ import { styled } from "@mui/system";
 
 
 const StyledPaper = styled(Paper, {})({
-    backgroundColor: "rgba(39,61,74,255)",
+    backgroundColor: "#2c4250",
     color: "rgb(218,225,227)",
-    fontSize: 12,
-    margin: "auto",
-    borderRadius: 1, 
-    height: 29,
-    width: '100%',
+    fontSize: 20,
+    fontWeight: "bold",
+    marginLeft: 25,
+    marginTop: 4,
+    height: 40,
     display: "flex",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "left"
 });
 
 
-export default function TableFooter() {
+export default function TableTitle() {
     return (
         <Grid item xs={12}>
             <StyledPaper elevation={0}>
-                © 2022 Highradius. All Rights Reserved.
+                Invoice List
             </StyledPaper>
         </Grid>
     )

@@ -7,8 +7,8 @@ import Button from '@mui/material/Button';
 
 
 const iconSx = {
-    height: '55%',
-    width: '75%',
+    height: 30,
+    width: 30,
     backgroundColor: "rgba(39,61,74,255)",
     color: "rgba(21,175,241,255)",
     border: "1px solid rgba(21,175,241,255)",
@@ -16,13 +16,14 @@ const iconSx = {
     ':hover': {
         backgroundColor: 'rgba(21,175,241,255)',
         color: "rgb(218,225,227)",
-      }
+      },
+    marginTop: "25px",
 }
 
 
 export default function RefreshButton() {
     return (
-        <Grid item xs={0.5} mt={3.05} >
+        <Grid item xs={0.5} backgroundColor="rgba(39,61,74,255)" >
             <IconButton 
             aria-label="refresh" 
             size="small" 
