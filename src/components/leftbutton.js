@@ -45,17 +45,17 @@ export default function LeftButtonGroup({
     setSearchCustNum,
     searchBizzYear,
     setSearchBizzYear,
-    editID,
     disableEdit,
-    predDocId,
+    predDict,
+    setReloadTable,
 }) {
     return (
         <Grid item xs={4.5} backgroundColor="rgba(39,61,74,255)">
             <StyledButtonGroup variant="outlined">
                 <Predict 
-                    editID={editID}
                     disableEdit={disableEdit}
-                    predDocId={predDocId}
+                    predDict={predDict}
+                    setReloadTable={setReloadTable}
                 />
                 <StyledButton>Analytics View</StyledButton>
                 <AdvanceSearch 

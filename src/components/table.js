@@ -59,6 +59,7 @@ const columns = [
     { field: 'baseline_create_date', headerName: 'Baseline Create Date', width: 90, align: "center", headerAlign: 'center' },
     { field: 'cust_payment_terms', headerName: 'Customer Payment Terms', width: 90, align: "center", headerAlign: 'center' },
     { field: 'invoice_id', headerName: 'Invoice ID', width: 90, align: "center", headerAlign: 'center' },
+    { field: 'aging_bucket', headerName: 'Aging Bucket', width: 90, align: "center", headerAlign: 'center' },
 ];
 
 
@@ -71,14 +72,23 @@ export default function DataTable({
   searchBizzYear,
   setEditID,
   setDisableEdit,
-  setPredDocId,
+  setPredDict,
+  reloadTable
 }) {
   const [pageSize, setPageSize] = React.useState(10);
   
   const [data, setData] = React.useState([]);
   useEffect(async () => {
     setData(await getData());
-  }, [])
+  }, [reloadTable])
+
+  //if reloadTable is true, set data agan with useeffect
+  // useEffect(async () => {
+  //   if(reloadTable){
+  //     setData(await getData());
+  //   }
+  // }, [reloadTable])
+  
 
 
   let rows=[]
@@ -116,22 +126,34 @@ export default function DataTable({
               let idSet = new Set(itm)
               const [first] = idSet;
               setEditID(first);
-              // console.log(idSet);
-              let array = [...idSet];
-              // console.log(array);
-              setPredDocId(array);
-              console.log(setPredDocId);
 
-              // //print all data from table in console with id=first
-              // setPredDocId(data.filter(item => item.id === first)[0].doc_id);
-              // console.log(data.filter(item => item.id === first)[0].doc_id);
+
+              if (first !== null) {
+                const row = data.find(item => item.id === first);
+                var pred_dict = {
+                  business_code: row?.business_code,
+                  cust_number: row?.cust_number,
+                  name_customer: 'pred_data',
+                  clear_date: row?.clear_date,
+                  buisness_year: row?.buisness_year,
+                  doc_id: row?.doc_id,
+                  posting_date: row?.posting_date,
+                  due_in_date: row?.due_in_date,
+                  baseline_create_date: row?.baseline_create_date,
+                  cust_payment_terms: row?.cust_payment_terms,
+                  converted_usd: row?.total_open_amount,
+                };
+                setPredDict(pred_dict)
+                console.log(pred_dict);
+                
+              }
+
 
               if (idSet.size === 0){
                 setDisableEdit(true);
               } else {
                 setDisableEdit(false);
               }
-              // console.log(setDisableEdit);
             }}
 
             pageSize={pageSize}
