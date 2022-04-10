@@ -5,6 +5,7 @@ import Grid from "@mui/material/Grid";
 import { styled } from "@mui/system";
 import AdvanceSearch from "./advancesearch";
 import Predict from "./predictbutton";
+import AnalyticsView from "./analyticsbutton";
 
 
 
@@ -57,7 +58,8 @@ export default function LeftButtonGroup({
                     predDict={predDict}
                     setReloadTable={setReloadTable}
                 />
-                <StyledButton>Analytics View</StyledButton>
+                {/* <StyledButton>Analytics View</StyledButton> */}
+                <AnalyticsView />
                 <AdvanceSearch 
                     advanceSearch={advanceSearch}
                     setAdvanceSearch={setAdvanceSearch}

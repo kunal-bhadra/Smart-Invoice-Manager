@@ -90,6 +90,7 @@ export default function Predict({
                 }
             );
         }); 
+        window.location.reload();
         // setReloadTable("something");
     };
 
