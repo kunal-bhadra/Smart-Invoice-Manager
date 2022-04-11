@@ -14,7 +14,6 @@ import TableTitle from "./components/tabletitle"
 
 
 
-
 function App() {
   const [searchInput, setSearchInput] = useState("");
    
@@ -29,7 +28,9 @@ function App() {
 
   const [predDict, setPredDict] = useState("");
 
-  const [reloadTable, setReloadTable] = useState(0);
+  const [isStale, setIsStale] = useState(true); 
+
+  // getData(setIsStale);
    
   return (
     <div className="App">
@@ -53,10 +54,12 @@ function App() {
             setSearchBizzYear={setSearchBizzYear}
             disableEdit={disableEdit}
             predDict={predDict}
-            setReloadTable={setReloadTable}
-            reloadTable={reloadTable}
+            setIsStale={setIsStale}
           />
-          <RefreshButton />
+          <RefreshButton 
+            setIsStale={setIsStale}
+            isStale={isStale}
+          />
           <SearchInput 
             searchInput={searchInput} 
             setSearchInput={setSearchInput} 
@@ -77,7 +80,8 @@ function App() {
             setEditID={setEditID}
             setDisableEdit={setDisableEdit}
             setPredDict={setPredDict}
-            reloadTable={reloadTable}
+            isStale={isStale}
+            setIsStale={setIsStale}
           />
           <TableFooter />
         </Grid>

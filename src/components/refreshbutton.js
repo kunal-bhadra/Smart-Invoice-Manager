@@ -4,6 +4,8 @@ import RefreshIcon from '@mui/icons-material/Refresh';
 import { styled } from '@mui/system';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
+import LoadingButton from '@mui/lab/LoadingButton';
+
 
 
 const iconSx = {
@@ -21,7 +23,12 @@ const iconSx = {
 }
 
 
-export default function RefreshButton() {
+export default function RefreshButton({
+    setIsStale,
+    isStale
+}) {
+    const [loading, setLoading] = React.useState(true);
+
     return (
         <Grid item xs={0.5} backgroundColor="rgba(39,61,74,255)" >
             <IconButton 
@@ -29,11 +36,25 @@ export default function RefreshButton() {
             size="small" 
             sx={iconSx}
             onClick={() => {
-                window.location.reload();
+                setIsStale(true);
             }}
             >
                 <RefreshIcon sx={{fontSize: "18px"}}/>
             </IconButton>
+            {/* <LoadingButton
+                size="small"
+                sx={iconSx}
+                onClick={() => {
+                    setIsStale(true);
+                    setLoading(isStale);
+                }}
+                loading={loading}
+                variant="outlined"
+                disabled
+                >
+                    <RefreshIcon sx={{fontSize: "18px"}}/>
+            </LoadingButton> */}
         </Grid>
     );
   }
+

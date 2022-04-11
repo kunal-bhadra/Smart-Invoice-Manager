@@ -48,7 +48,7 @@ export default function LeftButtonGroup({
     setSearchBizzYear,
     disableEdit,
     predDict,
-    setReloadTable,
+    setIsStale,
 }) {
     return (
         <Grid item xs={4.5} backgroundColor="rgba(39,61,74,255)">
@@ -56,7 +56,7 @@ export default function LeftButtonGroup({
                 <Predict 
                     disableEdit={disableEdit}
                     predDict={predDict}
-                    setReloadTable={setReloadTable}
+                    setIsStale={setIsStale}
                 />
                 {/* <StyledButton>Analytics View</StyledButton> */}
                 <AnalyticsView />

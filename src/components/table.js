@@ -1,7 +1,8 @@
 import * as React from 'react';
+import axios from "axios";
 import { useEffect, useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import { getData } from '../services/data';
+// import { getData } from '../services/data';
 
 
 const datagridSx = {
@@ -63,6 +64,7 @@ const columns = [
 ];
 
 
+
 export default function DataTable({ 
   searchInput, 
   advanceSearch,
@@ -73,23 +75,31 @@ export default function DataTable({
   setEditID,
   setDisableEdit,
   setPredDict,
-  reloadTable
+  isStale, 
+  setIsStale
 }) {
-  const [pageSize, setPageSize] = React.useState(10);
+  
+  const getData = async () => {
+    let response = await axios.get('http://localhost:8080/h2h-backend/list');
+
+    console.log(response.data.length);
+    setIsStale(false);
+    return response.data;
+  }
   
   const [data, setData] = React.useState([]);
-  useEffect(async () => {
-    setData(await getData());
-  }, [])
 
-  //if reloadTable is true, set data agan with useeffect
-  // useEffect(async () => {
-  //   if(reloadTable){
-  //     setData(await getData());
-  //   }
-  // }, [reloadTable])
+  useEffect(() => {
+    async function fetchData() {
+      
+      const data1 = await getData();
+      setData(data1);
+    } 
+    fetchData();
+  }, [isStale]);
+
   
-
+  const [pageSize, setPageSize] = React.useState(10);
 
   let rows=[]
   if (advanceSearch === true) {
@@ -127,7 +137,6 @@ export default function DataTable({
               const [first] = idSet;
               setEditID(first);
 
-
               if (first !== null) {
                 const row = data.find(item => item.id === first);
                 var pred_dict = {
@@ -147,7 +156,6 @@ export default function DataTable({
                 console.log(pred_dict);
                 
               }
-
 
               if (idSet.size === 0){
                 setDisableEdit(true);

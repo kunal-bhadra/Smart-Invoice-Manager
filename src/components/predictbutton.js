@@ -37,8 +37,7 @@ const StyledButton = styled(Button, {})({
 export default function Predict({
     disableEdit,
     predDict,
-    setReloadTable,
-    reloadTable
+    setIsStale,
 }) {
 
     const getPrediction = async () => {
@@ -68,13 +67,10 @@ export default function Predict({
             preddata,
             {headers:{"Content-Type" : "application/json"}}
         ).then(res=>{
-            setReloadTable(reloadTable + 1);
+            setIsStale(true);
         }).catch(err=>{
             console.log("Error ", err);
         });
-        console.log(reloadTable)
-        // window.location.reload();
-        // setReloadTable("something");
     };
 
     
