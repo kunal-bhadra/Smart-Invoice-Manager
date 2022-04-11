@@ -29,7 +29,7 @@ function App() {
 
   const [predDict, setPredDict] = useState("");
 
-  const [reloadTable, setReloadTable] = useState("");
+  const [reloadTable, setReloadTable] = useState(0);
    
   return (
     <div className="App">

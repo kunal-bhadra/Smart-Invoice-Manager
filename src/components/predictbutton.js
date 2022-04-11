@@ -4,6 +4,7 @@ import { styled } from "@mui/system";
 import axios from "axios";
 
 
+
 const StyledButton = styled(Button, {})({
     backgroundColor: "rgba(21,175,241,255)",
     color: "rgb(218,225,227)",
@@ -42,55 +43,37 @@ export default function Predict({
 
     const getPrediction = async () => {
 
-        let response = await axios.post(
+        let preddata = {};
+
+        await axios.post(
             "http://127.0.0.1:5000/",
             predDict,
             {headers:{"Content-Type" : "application/json"}}
-        ).catch(function (error) {
-            let e = error;
-            if (error.response) {
-                e = error.response.data;
-                if (error.response.data && error.response.data.error) {
-                    e = error.response.data.error;
-                }
-            } else if (error.message) {
-                e = error.message;
-            } else {
-                e = "Unknown error occured";
-            }
-            return e;
+        ).then(res=>{
+            res.data.forEach(async (data) => {
+                let str = "doc_id=" + parseInt(data.doc_id) + "&aging_bucket=" + data.aging_bucket;
+                console.log(str)
+
+                preddata = JSON.stringify({
+                    doc_id: data.doc_id,
+                    aging_bucket: data.aging_bucket
+                });
+            })
+        }).catch(err=>{
+            console.log("Error ", err);
         });
 
-        response.data.forEach(async (data) => {
-            let str = "doc_id=" + parseInt(data.doc_id) + "&aging_bucket=" + data.aging_bucket;
-            console.log(str)
-            
-            let preddata = JSON.stringify({
-                doc_id: data.doc_id,
-                aging_bucket: data.aging_bucket
-            });
-            
-            await axios.post(
-                "http://localhost:8080/h2h-backend/editpredict",
-                preddata,
-                {headers:{"Content-Type" : "application/json"}}
-                ).catch(function (error) {
-                    let e = error;
-                    if (error.response) {
-                        e = error.response.data;                   
-                        if (error.response.data && error.response.data.error) {
-                            e = error.response.data.error;          
-                        }
-                    } else if (error.message) {
-                        e = error.message;
-                    } else {
-                        e = "Unknown error occured";
-                    }
-                    return e;
-                }
-            );
-        }); 
-        window.location.reload();
+        axios.post(
+            "http://localhost:8080/h2h-backend/editpredict",
+            preddata,
+            {headers:{"Content-Type" : "application/json"}}
+        ).then(res=>{
+            setReloadTable(reloadTable + 1);
+        }).catch(err=>{
+            console.log("Error ", err);
+        });
+        console.log(reloadTable)
+        // window.location.reload();
         // setReloadTable("something");
     };
 

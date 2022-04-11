@@ -21,7 +21,6 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
-// import { BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar} from 'recharts';
 import {
     Chart as ChartJS,
     ArcElement,
@@ -78,7 +77,6 @@ const StyledBottomButton = styled(Button, {})({
     justifyContent: "space-around",
 });
 
-
 const StyledButton = styled(Button, {})({
     backgroundColor: "rgba(39,61,74,255)",
     color: "rgb(218,225,227)",
@@ -102,6 +100,7 @@ const StyledButton = styled(Button, {})({
 
 
 export default function AnalyticsView() {
+
     const [open, setOpen] = useState(false);
     const [openChart, setOpenChart] = useState(false);
 
@@ -112,9 +111,8 @@ export default function AnalyticsView() {
     const [viewStartBaselineCreateDate, setViewStartBaselineCreateDate] = useState(new Date('2022-01-10'));
     const [viewEndBaselineCreateDate, setViewEndBaselineCreateDate] = useState(new Date('2022-01-10'));
     const [viewInvoiceCurrency, setViewInvoiceCurrency] = useState("");
-    // const [barGraphData, setBarGraphData] = useState([]);
     const [barDataChartJs, setbarDataChartJs] = useState({});
-    const [barPieChartJs, setbarPieChartJs] = useState({});
+    const [PieDataChartJs, setPieDataChartJs] = useState({});
 
 
     const bar_options = {
@@ -198,7 +196,6 @@ export default function AnalyticsView() {
             ) + "]";
             const resJson = JSON.parse(resSubstring);  
             // console.log(typeof resJson, resJson);
-            // setBarGraphData(resJson);
 
             let labels = [];
             let barDataCust = [];
@@ -215,16 +212,16 @@ export default function AnalyticsView() {
                   {
                     label: 'No. of Customers',
                     data: barDataCust,
-                    backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                    backgroundColor: '#1885a3',
                   },
                   {
                     label: 'Total Open Amount (in Thousands)',
                     data: barDataAmount,
-                    backgroundColor: 'rgba(53, 162, 235, 0.5)',
+                    backgroundColor: '#f3c567',
                   },
                 ],
               });
-              console.log("Bar: ", typeof barDataChartJs, barDataChartJs);
+              console.log("Bar Data: ", typeof barDataChartJs, barDataChartJs);
 
         }).catch(err=>{
             console.log("Error ", err);
@@ -251,26 +248,20 @@ export default function AnalyticsView() {
                 pieDataCust.push(resPieJson[i].num_of_customers);
             }
 
-            setbarPieChartJs({
+            setPieDataChartJs({
                 labels: pielabels,
                 datasets: [
                     {
                     label: 'Invoice Currency Frequency',
                     data: pieDataCust,
                     backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                    ],
-                    borderWidth: 1,
-                    },
-                ],
+                        '#1885a3',
+                        '#f3c567',
+                    ]
+                    }],
                 })
-                // console.log(pielabels, pieDataCust);
-                console.log("Pie: ", typeof barPieChartJs, barPieChartJs);
+                console.log("Pie Data: ", typeof PieDataChartJs, PieDataChartJs);
+        
         }).catch(err=>{
             console.log("Error ", err);
         });
@@ -564,13 +555,18 @@ export default function AnalyticsView() {
             </DialogContent>
             <DialogActions >
                 <StyledBottomButton onClick={sendChartData}>Submit</StyledBottomButton>
-                {(Object.keys(barPieChartJs).length !== 0) && <Dialog
+                {(Object.keys(PieDataChartJs).length !== 0) && <Dialog
                     fullScreen
                     open={openChart}
                     onClose={chartClickClose}
                     TransitionComponent={Transition}
                 >
-                    <AppBar sx={{ position: 'relative' }}>
+                    <AppBar 
+                        sx={{ 
+                            position: 'relative',
+                            backgroundColor: "rgba(39,61,74,255)",
+                            color: "rgb(218,225,227)",
+                            }}>
                         <Toolbar>
                             <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
                             Analytics View
@@ -587,19 +583,10 @@ export default function AnalyticsView() {
                     </AppBar>
                     <Grid container spacing={2}>
                         <Grid item xs={8} sx={{ pt: 2 }}>
-                            {/* <BarChart width={730} height={250} data={barGraphData}>
-                                <CartesianGrid strokeDasharray="3 3" />
-                                <XAxis dataKey="business_name" />
-                                <YAxis />
-                                <Tooltip />
-                                <Legend />
-                                <Bar dataKey="num_of_customers" fill="#8884d8" />
-                                <Bar dataKey="sum_total_amount" fill="#82ca9d" />
-                            </BarChart> */}
                             <Bar options={bar_options} data={barDataChartJs}/>
                         </Grid>
                         <Grid item xs={4} sx={{ pt: 2 }}>
-                            <Pie data={barPieChartJs} />
+                            <Pie data={PieDataChartJs} />
                         </Grid>
                     </Grid> 
                 </Dialog>}
