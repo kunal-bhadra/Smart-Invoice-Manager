@@ -80,7 +80,7 @@ export default function DataTable({
   const [data, setData] = React.useState([]);
   useEffect(async () => {
     setData(await getData());
-  }, [reloadTable])
+  }, [])
 
   //if reloadTable is true, set data agan with useeffect
   // useEffect(async () => {

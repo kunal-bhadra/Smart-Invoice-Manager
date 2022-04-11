@@ -15,7 +15,43 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 import axios from "axios";
-import Alert from '@mui/material/Alert';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import CloseIcon from '@mui/icons-material/Close';
+import Slide from '@mui/material/Slide';
+// import { BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar} from 'recharts';
+import {
+    Chart as ChartJS,
+    ArcElement,
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend,
+  } from 'chart.js';
+import { Bar } from 'react-chartjs-2';
+import { Pie } from 'react-chartjs-2';
+
+
+
+
+ChartJS.register(
+    ArcElement,
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend
+  );
+
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+  });
 
 
 const popupSx = {
@@ -25,18 +61,9 @@ const popupSx = {
       },
 }
 
-
-const dialogTextSx = {
-    '& .MuiDialogContentText-root': {
-        color: "rgb(218,225,227)",
-    }
-}
-
-
-const styledDialogContentText = styled(DialogContentText, {})({
+const StyledDialogContentText = styled(DialogContentText, {})({
     color: "rgb(218,225,227)",
 });
-
 
 const StyledBottomButton = styled(Button, {})({
     color: "rgb(218,225,227)",
@@ -74,19 +101,9 @@ const StyledButton = styled(Button, {})({
 
 
 
-export default function AnalyticsView({
-}) {
+export default function AnalyticsView() {
     const [open, setOpen] = useState(false);
-    
-  
-    const handleClickOpen = () => {
-      setOpen(true);
-    };
-  
-    const handleClose = () => {
-      setOpen(false);
-    };
-
+    const [openChart, setOpenChart] = useState(false);
 
     const [viewStartClearDate, setViewStartClearDate] = useState(new Date('2022-01-10'));
     const [viewStartDueDate, setViewStartDueDate] = useState(new Date('2022-01-10'));
@@ -95,9 +112,38 @@ export default function AnalyticsView({
     const [viewStartBaselineCreateDate, setViewStartBaselineCreateDate] = useState(new Date('2022-01-10'));
     const [viewEndBaselineCreateDate, setViewEndBaselineCreateDate] = useState(new Date('2022-01-10'));
     const [viewInvoiceCurrency, setViewInvoiceCurrency] = useState("");
+    // const [barGraphData, setBarGraphData] = useState([]);
+    const [barDataChartJs, setbarDataChartJs] = useState({});
+    const [barPieChartJs, setbarPieChartJs] = useState({});
 
 
+    const bar_options = {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'No. of Customers and Total Open Amount for every Business',
+          },
+        },
+      };
 
+
+    const handleClickOpen = () => {
+        setOpen(true);
+      };
+    const handleClose = () => {
+    setOpen(false);
+    };
+    const chartClickOpen = () => {
+        setOpenChart(true);
+    };
+    const chartClickClose = () => {
+        setOpenChart(false);
+    };
+      
     const startViewClearDateChange = (newVSCDValue) => {
         setViewStartClearDate(newVSCDValue);
       };
@@ -118,37 +164,119 @@ export default function AnalyticsView({
     };
 
 
+    const sendChartData = async () => {
+        
+        let bar_data = JSON.stringify({
+            from_clear_date: dayjs(viewStartClearDate).format('YYYY-MM-DD'),
+            to_clear_date: dayjs(viewEndClearDate).format('YYYY-MM-DD'),
+            from_due_date: dayjs(viewStartDueDate).format('YYYY-MM-DD'),
+            to_due_date: dayjs(viewEndDueDate).format('YYYY-MM-DD'),
+            from_baseline_create_date: dayjs(viewStartBaselineCreateDate).format('YYYY-MM-DD'),
+            to_baseline_create_date: dayjs(viewEndBaselineCreateDate).format('YYYY-MM-DD'),
+            invoice_currency: viewInvoiceCurrency,
+        });
+
+        let pie_data = JSON.stringify({
+            from_clear_date: dayjs(viewStartClearDate).format('YYYY-MM-DD'),
+            to_clear_date: dayjs(viewEndClearDate).format('YYYY-MM-DD'),
+            from_due_date: dayjs(viewStartDueDate).format('YYYY-MM-DD'),
+            to_due_date: dayjs(viewEndDueDate).format('YYYY-MM-DD'),
+            from_baseline_create_date: dayjs(viewStartBaselineCreateDate).format('YYYY-MM-DD'),
+            to_baseline_create_date: dayjs(viewEndBaselineCreateDate).format('YYYY-MM-DD'),
+        });
 
 
-    // const editRecord = () => {
-    //   let data = JSON.stringify({
-    //       id: editID,
-    //       invoice_currency: editInvoiceCurrency,
-    //       cust_payment_terms: editCustPaymentTerms
-    //       });
-          
-    //   axios.post(
-    //       "http://localhost:8080/h2h-backend/edit",
-    //       data,
-    //       {headers:{"Content-Type" : "application/json"}}
-    //       ).catch(function (error) {
-    //           let e = error;
-    //           if (error.response) {
-    //               e = error.response.data;                   
-    //               if (error.response.data && error.response.data.error) {
-    //                   e = error.response.data.error;          
-    //               }
-    //           } else if (error.message) {
-    //               e = error.message;
-    //           } else {
-    //               e = "Unknown error occured";
-    //           }
-    //           return e;
-    //       });
-      
-    //       setOpen(false);
-    // };
+        await axios.post(
+            "http://localhost:8080/h2h-backend/bardata",
+            bar_data,
+            {headers: {'Content-Type': 'application/json'}}
+        ).then(res=>{
+            const resData = res.data;
+            const resSubstring = "[" + resData.substring(
+                resData.indexOf("[") + 1, 
+                resData.indexOf("]")
+            ) + "]";
+            const resJson = JSON.parse(resSubstring);  
+            // console.log(typeof resJson, resJson);
+            // setBarGraphData(resJson);
 
+            let labels = [];
+            let barDataCust = [];
+            let barDataAmount = [];
+            for(let i = 0; i < resJson.length; i++){
+                labels.push(resJson[i].business_name);
+                barDataCust.push(resJson[i].num_of_customers);
+                barDataAmount.push(resJson[i].sum_total_amount);
+            }
+
+            setbarDataChartJs({
+                labels,
+                datasets: [
+                  {
+                    label: 'No. of Customers',
+                    data: barDataCust,
+                    backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                  },
+                  {
+                    label: 'Total Open Amount (in Thousands)',
+                    data: barDataAmount,
+                    backgroundColor: 'rgba(53, 162, 235, 0.5)',
+                  },
+                ],
+              });
+              console.log("Bar: ", typeof barDataChartJs, barDataChartJs);
+
+        }).catch(err=>{
+            console.log("Error ", err);
+        });
+
+
+        await axios.post(
+            "http://localhost:8080/h2h-backend/piedata",
+            pie_data,
+            {headers: {'Content-Type': 'application/json'}}
+        ).then(res=>{
+            const resPieData = res.data;
+            const resPieSubstring = "[" + resPieData.substring(
+                resPieData.indexOf("[") + 1, 
+                resPieData.indexOf("]")
+            ) + "]";
+            const resPieJson = JSON.parse(resPieSubstring);  
+            // console.log(typeof resPieJson, resPieJson);
+
+            let pielabels = [];
+            let pieDataCust = [];
+            for(let i = 0; i < resPieJson.length; i++){
+                pielabels.push(resPieJson[i].invoice_currency);
+                pieDataCust.push(resPieJson[i].num_of_customers);
+            }
+
+            setbarPieChartJs({
+                labels: pielabels,
+                datasets: [
+                    {
+                    label: 'Invoice Currency Frequency',
+                    data: pieDataCust,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                    ],
+                    borderWidth: 1,
+                    },
+                ],
+                })
+                // console.log(pielabels, pieDataCust);
+                console.log("Pie: ", typeof barPieChartJs, barPieChartJs);
+        }).catch(err=>{
+            console.log("Error ", err);
+        });
+            
+        chartClickOpen();
+    };
 
     
     return (
@@ -161,9 +289,9 @@ export default function AnalyticsView({
           <DialogContent>
               <Grid container rowSpacing={0} columnSpacing={4}>
                   <Grid item xs={6}>
-                    <styledDialogContentText>
+                    <StyledDialogContentText>
                             Clear Date
-                        </styledDialogContentText>
+                        </StyledDialogContentText>
                     <Box 
                         mt={0}
                         component="form"
@@ -181,7 +309,7 @@ export default function AnalyticsView({
                         >
                             <LocalizationProvider dateAdapter={AdapterDateFns}>
                                 <DesktopDatePicker
-                                    label="Start Date"
+                                    label="From"
                                     inputFormat="MM/dd/yyyy"
                                     value={viewStartClearDate}
                                     onChange={startViewClearDateChange}
@@ -203,9 +331,9 @@ export default function AnalyticsView({
                         </Box>
                     </Grid>
                     <Grid item xs={6}>
-                        <styledDialogContentText>
+                        <StyledDialogContentText>
                             Due Date
-                        </styledDialogContentText>
+                        </StyledDialogContentText>
                         <Box 
                         mt={0}
                         component="form"
@@ -223,7 +351,7 @@ export default function AnalyticsView({
                         >
                             <LocalizationProvider dateAdapter={AdapterDateFns}>
                                 <DesktopDatePicker
-                                    label="Start Date"
+                                    label="From"
                                     inputFormat="MM/dd/yyyy"
                                     value={viewStartDueDate}
                                     onChange={startViewDueDateChange}
@@ -262,7 +390,7 @@ export default function AnalyticsView({
                         >
                             <LocalizationProvider dateAdapter={AdapterDateFns}>
                                 <DesktopDatePicker
-                                    label="End Date"
+                                    label="To"
                                     inputFormat="MM/dd/yyyy"
                                     value={viewEndClearDate}
                                     onChange={endViewClearDateChange}
@@ -301,7 +429,7 @@ export default function AnalyticsView({
                         >
                             <LocalizationProvider dateAdapter={AdapterDateFns}>
                                 <DesktopDatePicker
-                                    label="End Date"
+                                    label="To"
                                     inputFormat="MM/dd/yyyy"
                                     value={viewEndDueDate}
                                     onChange={endViewDueDateChange}
@@ -325,9 +453,9 @@ export default function AnalyticsView({
                 </Grid>
                 <Grid container rowSpacing={0} columnSpacing={4}>
                     <Grid item xs={6} sx={{ pt: 2 }}>
-                    <styledDialogContentText >
+                    <StyledDialogContentText >
                             Baseline Create Date
-                        </styledDialogContentText>
+                        </StyledDialogContentText>
                     <Box 
                         mt={0}
                         component="form"
@@ -345,7 +473,7 @@ export default function AnalyticsView({
                         >
                             <LocalizationProvider dateAdapter={AdapterDateFns}>
                                 <DesktopDatePicker
-                                    label="Start Date"
+                                    label="From"
                                     inputFormat="MM/dd/yyyy"
                                     value={viewStartBaselineCreateDate}
                                     onChange={startViewBaselineCreateDateChange}
@@ -367,9 +495,9 @@ export default function AnalyticsView({
                         </Box>
                     </Grid>
                     <Grid item xs={6} sx={{ pt: 2 }}>
-                        <styledDialogContentText>
+                        <StyledDialogContentText>
                             Invoice Currency
-                        </styledDialogContentText>
+                        </StyledDialogContentText>
                         <Box mt={0}
                           component="form"
                           sx={{
@@ -411,7 +539,7 @@ export default function AnalyticsView({
                         >
                             <LocalizationProvider dateAdapter={AdapterDateFns}>
                                 <DesktopDatePicker
-                                    label="End Date"
+                                    label="To"
                                     inputFormat="MM/dd/yyyy"
                                     value={viewEndBaselineCreateDate}
                                     onChange={endViewBaselineCreateDateChange}
@@ -435,7 +563,46 @@ export default function AnalyticsView({
                 </Grid>
             </DialogContent>
             <DialogActions >
-                <StyledBottomButton onClick={handleClose}>Submit</StyledBottomButton>
+                <StyledBottomButton onClick={sendChartData}>Submit</StyledBottomButton>
+                {(Object.keys(barPieChartJs).length !== 0) && <Dialog
+                    fullScreen
+                    open={openChart}
+                    onClose={chartClickClose}
+                    TransitionComponent={Transition}
+                >
+                    <AppBar sx={{ position: 'relative' }}>
+                        <Toolbar>
+                            <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+                            Analytics View
+                            </Typography>
+                            <IconButton 
+                            edge="start"
+                            color="inherit"
+                            onClick={chartClickClose}
+                            aria-label="close"
+                            >
+                                <CloseIcon />
+                            </IconButton>
+                        </Toolbar>
+                    </AppBar>
+                    <Grid container spacing={2}>
+                        <Grid item xs={8} sx={{ pt: 2 }}>
+                            {/* <BarChart width={730} height={250} data={barGraphData}>
+                                <CartesianGrid strokeDasharray="3 3" />
+                                <XAxis dataKey="business_name" />
+                                <YAxis />
+                                <Tooltip />
+                                <Legend />
+                                <Bar dataKey="num_of_customers" fill="#8884d8" />
+                                <Bar dataKey="sum_total_amount" fill="#82ca9d" />
+                            </BarChart> */}
+                            <Bar options={bar_options} data={barDataChartJs}/>
+                        </Grid>
+                        <Grid item xs={4} sx={{ pt: 2 }}>
+                            <Pie data={barPieChartJs} />
+                        </Grid>
+                    </Grid> 
+                </Dialog>}
                 <StyledBottomButton onClick={handleClose}>Cancel</StyledBottomButton>
             </DialogActions>
         </Dialog>
