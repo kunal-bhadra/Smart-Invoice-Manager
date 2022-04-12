@@ -30,7 +30,6 @@ function App() {
 
   const [isStale, setIsStale] = useState(true); 
 
-  // getData(setIsStale);
    
   return (
     <div className="App">
@@ -55,6 +54,7 @@ function App() {
             disableEdit={disableEdit}
             predDict={predDict}
             setIsStale={setIsStale}
+            isStale={isStale}
           />
           <RefreshButton 
             setIsStale={setIsStale}

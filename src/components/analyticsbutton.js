@@ -33,6 +33,8 @@ import {
   } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import { Pie } from 'react-chartjs-2';
+import CircularProgress from '@mui/material/CircularProgress';
+
 
 
 
@@ -103,6 +105,7 @@ export default function AnalyticsView() {
 
     const [open, setOpen] = useState(false);
     const [openChart, setOpenChart] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const [viewStartClearDate, setViewStartClearDate] = useState(new Date('2022-01-10'));
     const [viewStartDueDate, setViewStartDueDate] = useState(new Date('2022-01-10'));
@@ -163,6 +166,7 @@ export default function AnalyticsView() {
 
 
     const sendChartData = async () => {
+        setIsLoading(true);
         
         let bar_data = JSON.stringify({
             from_clear_date: dayjs(viewStartClearDate).format('YYYY-MM-DD'),
@@ -265,7 +269,8 @@ export default function AnalyticsView() {
         }).catch(err=>{
             console.log("Error ", err);
         });
-            
+        
+        setIsLoading(false);
         chartClickOpen();
     };
 
@@ -554,7 +559,17 @@ export default function AnalyticsView() {
                 </Grid>
             </DialogContent>
             <DialogActions >
-                <StyledBottomButton onClick={sendChartData}>Submit</StyledBottomButton>
+                <StyledBottomButton onClick={sendChartData}>
+                    {isLoading===false && <Typography sx={{fontSize: 13, fontWeight: 'bold'}}>
+                        Submit
+                    </Typography>}
+                    {isLoading===true && <Box sx={{ display: 'flex' }}>
+                        <CircularProgress 
+                            size={16.9}
+                            sx={{color:"rgba(21,175,241,255)"}}
+                        />
+                    </Box>}
+                </StyledBottomButton>
                 {(Object.keys(PieDataChartJs).length !== 0) && <Dialog
                     fullScreen
                     open={openChart}

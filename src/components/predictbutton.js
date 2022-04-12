@@ -38,10 +38,11 @@ export default function Predict({
     disableEdit,
     predDict,
     setIsStale,
+    isStale
 }) {
 
     const getPrediction = async () => {
-
+        
         let preddata = {};
 
         await axios.post(

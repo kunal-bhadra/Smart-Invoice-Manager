@@ -49,6 +49,7 @@ export default function LeftButtonGroup({
     disableEdit,
     predDict,
     setIsStale,
+    isStale,
 }) {
     return (
         <Grid item xs={4.5} backgroundColor="rgba(39,61,74,255)">
@@ -57,6 +58,7 @@ export default function LeftButtonGroup({
                     disableEdit={disableEdit}
                     predDict={predDict}
                     setIsStale={setIsStale}
+                    isStale={isStale}
                 />
                 {/* <StyledButton>Analytics View</StyledButton> */}
                 <AnalyticsView />

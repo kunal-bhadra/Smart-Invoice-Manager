@@ -5,6 +5,10 @@ import { styled } from '@mui/system';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import LoadingButton from '@mui/lab/LoadingButton';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
+
+
 
 
 
@@ -39,21 +43,14 @@ export default function RefreshButton({
                 setIsStale(true);
             }}
             >
-                <RefreshIcon sx={{fontSize: "18px"}}/>
+                {isStale===true && <Box sx={{ display: 'flex' }}>
+                    <CircularProgress 
+                        size={16.9}
+                        sx={{color:"rgba(21,175,241,255)"}}
+                    />
+                </Box>}
+                {isStale===false && <RefreshIcon sx={{fontSize: "18px"}}/>}
             </IconButton>
-            {/* <LoadingButton
-                size="small"
-                sx={iconSx}
-                onClick={() => {
-                    setIsStale(true);
-                    setLoading(isStale);
-                }}
-                loading={loading}
-                variant="outlined"
-                disabled
-                >
-                    <RefreshIcon sx={{fontSize: "18px"}}/>
-            </LoadingButton> */}
         </Grid>
     );
   }
