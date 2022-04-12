@@ -33,7 +33,6 @@ const StyledBottomButton = styled(Button, {})({
     justifyContent: "space-around",
 });
 
-
 const StyledButton = styled(Button, {})({
     backgroundColor: "rgba(39,61,74,255)",
     color: "rgb(218,225,227)",
@@ -55,8 +54,8 @@ const StyledButton = styled(Button, {})({
 });
 
 
+
 export default function AdvanceSearch({
-    advanceSearch,
     setAdvanceSearch,
     searchDocID,
     setSearchDocID,
@@ -67,6 +66,7 @@ export default function AdvanceSearch({
     searchBizzYear,
     setSearchBizzYear,
 }) {
+
   const [open, setOpen] = React.useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -78,7 +78,6 @@ export default function AdvanceSearch({
   const handleClose = () => {
     setOpen(false);
   };
-
 
   const checkAll = () => {
     if(searchDocID !== "" && searchInvoiceID !== "" && searchCustNum !== "" && searchBizzYear !== ""){
@@ -98,7 +97,7 @@ export default function AdvanceSearch({
       </StyledButton>
       <Dialog open={open} onClose={handleClose} sx={popupSx} fullWidth={true} >
         <DialogTitle>Advance Search</DialogTitle>
-        {errorMessage && <Alert severity="warning">Please enter values in all fields to do advance search!</Alert>}
+        {errorMessage && <Alert severity="warning">Please enter values in all the fields to do advance search!</Alert>}
         <DialogContent>
             <Grid container rowSpacing={0} columnSpacing={3.5}>
                 <Grid item xs={6}>

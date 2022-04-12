@@ -17,6 +17,7 @@ import axios from "axios";
 import Alert from '@mui/material/Alert';
 
 
+
 const popupSx = {
     '& .MuiDialog-paper': {
         backgroundColor: "rgba(44,66,80,255)",
@@ -36,7 +37,6 @@ const StyledBottomButton = styled(Button, {})({
     alignItems: "center",
     justifyContent: "space-around",
 });
-
 
 const StyledButton = styled(Button, {})({
     backgroundColor: "rgba(39,61,74,255)",
@@ -61,6 +61,7 @@ const StyledButton = styled(Button, {})({
 
 
 export default function Add() {
+
   const [open, setOpen] = React.useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -72,7 +73,6 @@ export default function Add() {
     setOpen(false);
   };
 
-
   const checkAll = () => {
     if (addBizzCode !== "" && addCustNumber !== 0 && addClearDate !== "" && addBizzYear !== 0 && addDocId !== "" && addPostingDate !== "" && addDocCreateDate !== "" && addDueDate !== "" && addInvoiceCurrency !== "" && addDocType !== "" && addPostingId !== "" && addTotalOpenAmount !== "" && addBaselineCreateDate !== "" && addCustPaymentTerms !== "" && addInvoiceId !== "") {
         addRecord();
@@ -82,50 +82,6 @@ export default function Add() {
     }
   }
  
-  const addRecord = () => {
-    let data = JSON.stringify({
-        business_code: addBizzCode,
-        cust_number: addCustNumber,
-        clear_date: dayjs(addClearDate).format('YYYY-MM-DD'),
-        buisness_year: addBizzYear,
-        doc_id: addDocId,
-        posting_date: dayjs(addPostingDate).format('YYYY-MM-DD'),
-        document_create_date: dayjs(addDocCreateDate).format('YYYY-MM-DD'),
-        due_in_date: dayjs(addDueDate).format('YYYY-MM-DD'),
-        invoice_currency: addInvoiceCurrency,
-        document_type: addDocType,
-        posting_id: addPostingId,
-        total_open_amount: addTotalOpenAmount,
-        baseline_create_date: dayjs(addBaselineCreateDate).format('YYYY-MM-DD'),
-        cust_payment_terms: addCustPaymentTerms,
-        invoice_id: addInvoiceId
-        });
-        
-    axios.post(
-        "http://localhost:8080/h2h-backend/insert",
-        data,
-        {headers:{"Content-Type" : "application/json"}}
-        ).catch(function (error) {
-            let e = error;
-            if (error.response) {
-                e = error.response.data;                   // data, status, headers
-                if (error.response.data && error.response.data.error) {
-                    e = error.response.data.error;           // my app specific keys override
-                }
-            } else if (error.message) {
-                e = error.message;
-            } else {
-                e = "Unknown error occured";
-            }
-            return e;
-        });
-    
-        setOpen(false);
-  };
-
-
-  
-
 
   const [addBizzCode, setAddBizzCode] = useState("");
   const [addCustNumber, setAddCustNumber] = useState(0);
@@ -159,7 +115,37 @@ export default function Add() {
   const baselineCreateDateChange = (newBCDValue) => {
     setAddBaselineCreateDate(newBCDValue);
   };
+  
 
+  const addRecord = () => {
+    let data = JSON.stringify({
+        business_code: addBizzCode,
+        cust_number: addCustNumber,
+        clear_date: dayjs(addClearDate).format('YYYY-MM-DD'),
+        buisness_year: addBizzYear,
+        doc_id: addDocId,
+        posting_date: dayjs(addPostingDate).format('YYYY-MM-DD'),
+        document_create_date: dayjs(addDocCreateDate).format('YYYY-MM-DD'),
+        due_in_date: dayjs(addDueDate).format('YYYY-MM-DD'),
+        invoice_currency: addInvoiceCurrency,
+        document_type: addDocType,
+        posting_id: addPostingId,
+        total_open_amount: addTotalOpenAmount,
+        baseline_create_date: dayjs(addBaselineCreateDate).format('YYYY-MM-DD'),
+        cust_payment_terms: addCustPaymentTerms,
+        invoice_id: addInvoiceId
+        });
+        
+    axios.post(
+        "http://localhost:8080/h2h-backend/insert",
+        data,
+        {headers:{"Content-Type" : "application/json"}}
+        ).catch(err=>{
+            console.log("Error ", err);
+        });
+    
+        setOpen(false);
+  };
 
   
   return (

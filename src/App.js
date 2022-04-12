@@ -15,6 +15,7 @@ import TableTitle from "./components/tabletitle"
 
 
 function App() {
+
   const [searchInput, setSearchInput] = useState("");
    
   const [advanceSearch, setAdvanceSearch] = useState(false);
@@ -31,6 +32,7 @@ function App() {
   const [isStale, setIsStale] = useState(true); 
 
    
+
   return (
     <div className="App">
       <Container maxWidth="false" disableGutters={true}>
@@ -41,7 +43,6 @@ function App() {
         </Grid>
         <Grid container spacing={0}>
           <LeftButtonGroup 
-            advanceSearch={advanceSearch}
             setAdvanceSearch={setAdvanceSearch}
             searchDocID={searchDocID}
             setSearchDocID={setSearchDocID}
@@ -54,7 +55,6 @@ function App() {
             disableEdit={disableEdit}
             predDict={predDict}
             setIsStale={setIsStale}
-            isStale={isStale}
           />
           <RefreshButton 
             setIsStale={setIsStale}

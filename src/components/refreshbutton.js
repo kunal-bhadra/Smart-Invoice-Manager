@@ -1,14 +1,9 @@
 import * as React from 'react';
 import IconButton from '@mui/material/IconButton';
 import RefreshIcon from '@mui/icons-material/Refresh';
-import { styled } from '@mui/system';
 import Grid from '@mui/material/Grid';
-import Button from '@mui/material/Button';
-import LoadingButton from '@mui/lab/LoadingButton';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
-
-
 
 
 
@@ -27,11 +22,11 @@ const iconSx = {
 }
 
 
+
 export default function RefreshButton({
     setIsStale,
     isStale
 }) {
-    const [loading, setLoading] = React.useState(true);
 
     return (
         <Grid item xs={0.5} backgroundColor="rgba(39,61,74,255)" >

@@ -20,7 +20,6 @@ const popupSx = {
       },
 }
 
-
 const StyledBottomButton = styled(Button, {})({
     color: "rgb(218,225,227)",
     borderColor: "rgb(218,225,227)",
@@ -33,7 +32,6 @@ const StyledBottomButton = styled(Button, {})({
     alignItems: "center",
     justifyContent: "space-around",
 });
-
 
 const StyledButton = styled(Button, {})({
     backgroundColor: "rgba(39,61,74,255)",
@@ -64,7 +62,11 @@ export default function Edit({
     editID,
     disableEdit,
 }) {
+
     const [open, setOpen] = React.useState(false);
+
+    const [editInvoiceCurrency, setEditInvoiceCurrency] = useState("");
+    const [editCustPaymentTerms, setEditCustPaymentTerms] = useState("");
     
   
     const handleClickOpen = () => {
@@ -77,37 +79,24 @@ export default function Edit({
 
 
     const editRecord = () => {
+
       let data = JSON.stringify({
           id: editID,
           invoice_currency: editInvoiceCurrency,
           cust_payment_terms: editCustPaymentTerms
           });
           
-      axios.post(
+        axios.post(
           "http://localhost:8080/h2h-backend/edit",
           data,
           {headers:{"Content-Type" : "application/json"}}
-          ).catch(function (error) {
-              let e = error;
-              if (error.response) {
-                  e = error.response.data;                   
-                  if (error.response.data && error.response.data.error) {
-                      e = error.response.data.error;          
-                  }
-              } else if (error.message) {
-                  e = error.message;
-              } else {
-                  e = "Unknown error occured";
-              }
-              return e;
-          });
+          ).catch(err=>{
+            console.log("Error ", err);
+        });
       
-          setOpen(false);
-    };
+        setOpen(false);
+      };
 
-
-    const [editInvoiceCurrency, setEditInvoiceCurrency] = useState("");
-    const [editCustPaymentTerms, setEditCustPaymentTerms] = useState("");
 
     
     return (

@@ -4,6 +4,7 @@ import Grid from "@mui/material/Grid";
 import { styled } from "@mui/system";
 
 
+
 const StyledPaper = styled(Paper, {})({
     backgroundColor: "rgba(39,61,74,255)",
     color: "rgb(218,225,227)",
@@ -16,6 +17,7 @@ const StyledPaper = styled(Paper, {})({
     alignItems: "center",
     justifyContent: "center"
 });
+
 
 
 export default function TableFooter() {

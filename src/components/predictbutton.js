@@ -38,7 +38,6 @@ export default function Predict({
     disableEdit,
     predDict,
     setIsStale,
-    isStale
 }) {
 
     const getPrediction = async () => {
@@ -74,6 +73,7 @@ export default function Predict({
         });
     };
 
+    
     
     return (
       <div>

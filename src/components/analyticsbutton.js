@@ -37,8 +37,6 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 
 
-
-
 ChartJS.register(
     ArcElement,
     CategoryScale,
@@ -166,6 +164,7 @@ export default function AnalyticsView() {
 
 
     const sendChartData = async () => {
+
         setIsLoading(true);
         
         let bar_data = JSON.stringify({
@@ -274,6 +273,7 @@ export default function AnalyticsView() {
         chartClickOpen();
     };
 
+    
     
     return (
       <div>

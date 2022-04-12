@@ -4,6 +4,7 @@ import TextField from '@mui/material/TextField';
 import Grid from "@mui/material/Grid";
 
 
+
 export default function SearchInput({ searchInput, setSearchInput }) {
 
   return (
