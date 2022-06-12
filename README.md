@@ -1,5 +1,5 @@
 
-# LatePayCatcher: Fullstack Smart Invoice Manager
+# LatePayCatcher: FullStack Smart Invoice Manager
 
 Built as my Capstone project, this webapp helps people working in the B2B Finance working environment to create and manage their invoices. Users would be able to:
 - View the invoice data from various buyers
