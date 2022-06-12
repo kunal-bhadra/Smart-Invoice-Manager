@@ -1,70 +1,51 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# The LatePayCatcher: Predict Delay in Client Payments
 
-## Available Scripts
+My Capstone project, the LatePayCatcher is a web-app that would help the people working in the Accounts Receivable departments in their day-to-day activities. The users can view their invoice date, and also predict when the clients will pay their invoices. The ML model was built with **XGBoost** after processing 50k datapoints. For deployment, a webapp would be built with React.
 
-In the project directory, you can run:
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 🚀 Metrics
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+We experimented with various models and hypertuned them with Optuna to get the best performance, the result of which can be found below:
+![alt text](https://github.com/kunal-bhadra/Payment-Delay-Forecaster/blob/master/final_metrics.jpg)
 
-### `npm test`
+We see that CatBoost actually performs a little worse after hyperparameter tuning. This could be because CatBoost has a very good set of default values from the start and Optuna wasn't able to close in on the optimal parameters in the limited time and set.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+## ✏ Tech Stack for Project Development
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Pandas
+- Numpy
+- Matplotlib
+- Seaborn
+- Optuna 
+- Scikit-learn
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 🚶‍♂️ The Walkthrough
+1. We worked with a fairly dense dataset of **50k records** and 19 columns containing multiple datetime features.
+2. All categorical columns were encoded through a **One-Hot Encoder** since they work best with Tree algorithms.
+3. Time Series Analysis was conducted with lag plots to check for possible relationships.
+4. We utilized both our encoded dataframe and **categorical dataframe** based on the model we were using.
+5. Models used were Linear Regression, XGBoost, CatBoost, LightGBM and Random Forests, hypertuned with **Optuna**.
+6. After our experiments, we concluded that **LightGBM** gave us the best performance after hyperparameter tuning with a **8.5 RMSE** ( < delay column standard deviation of 10.8) and a **0.37 R2 Score**.
+7. After a guided second approach with label-encoding and in-depth feature engineering, we achieved a **R2 Score of 0.74** on our Test Set with Vanilla XGBoost.
+8. The null data was fed into the model giving us our delay predictions which was binned into 5 groups for easier comparison.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## 🧠 Some Resources I Used
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- [Official XGBoost Parameter Docs](https://xgboost.readthedocs.io/en/stable/parameter.html)
+- [Hyperparameter of XGBoost with Optuna](https://www.kaggle.com/hamzaghanmi/xgboost-hyperparameter-tuning-using-optuna)
+- [Random Forests from Scikit-learn](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html#sklearn.ensemble.RandomForestRegressor.score)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 🔗 Connect with me:
+[![portfolio](https://img.shields.io/badge/my_portfolio-000?style=for-the-badge&logo=ko-fi&logoColor=white)](https://www.polywork.com/kunal_bhadra)
+[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/kunal-bhadra-cs/)
+[![twitter](https://img.shields.io/badge/twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/kunal_kaun)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+  

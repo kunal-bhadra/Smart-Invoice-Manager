@@ -1,0 +1,24 @@
+Data Dictionary:
+
+business_code: company code of the account
+cust_number: customer number given to all the customers of the account
+name_customer: name of the customer
+clear_date: date on which the customer clears an invoice, or in simple terms, makes the full payment
+business_year: the year in which the invoice was created
+doc_id: a unique identifier of an invoice
+posting_date: the date on which the particular invoice was entered in the ERP database
+document_create_date: the date on which the invoice document was created
+document_create_date.1: normalized version of document_create_date (we'll use this to split the data)
+due_in_date: the date on which the customer is expected to clear an invoice
+invoice_currency: the currency of the invoice amount in the document of the invoice
+document type: represents the type of document, eg, D1 represents invoice
+posting_id: key indicator to identify whether on AR terms is invoice, deduction, credit memo based on its value. Applicable for SAP ERP
+area_business: business area in sap is defined as an organisational area within the financial accounting module
+total_open_amount: the amount that is yet to be paid for that invoice
+baseline_create_date: the date on which the invoice was created
+cust_payment_terms: business terms and agreements between customers and accounts on discounts and days of payments
+invoice_id: unique number assigned when a seller creates an invoice
+isOpen: indicator of whether an invoice is open or closed. isOpen = 1, means that the invoice is still open
+
+- we have to predict the delay (no. of days)
+- add delay to due date and we get predicted payment date (MAIN TARGET to be displayed in app)
