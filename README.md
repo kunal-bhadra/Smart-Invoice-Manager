@@ -13,6 +13,7 @@ Built as my Capstone project, this webapp helps people working in the B2B Financ
 ## 🚀 Result
 
 A fully responsive webapp built using a ReactJS frontend, Java backend, MySQL database, fueled by XGBoost regression and Flask API:
+
 ![alt text](https://github.com/kunal-bhadra/Smart_Invoice_Manager/blob/master/demo.jpg)
 
 
@@ -47,7 +48,7 @@ A fully responsive webapp built using a ReactJS frontend, Java backend, MySQL da
 ### 3. Java, SQL & Flask Backend
 - A MySQL database was used for data loading and CRUD functionality
 - Flask API was the python backend to communicate with the frontend and return results from our ML model
-- Java, JDBC and Servlets were used to receive the GET/POST requests and to communicate with the MySQL database
+- Java, JDBC and Servlets were used to receive the GET/POST requests and to communicate with MySQL
 
 
 
