@@ -48,7 +48,7 @@ A fully responsive webapp built using a ReactJS frontend, Java backend, MySQL da
 ### 3. Java, SQL & Flask Backend
 - A MySQL database was used for data loading and CRUD functionality
 - Flask API was the python backend to communicate with the frontend and return results from our ML model
-- Java, JDBC and Servlets were used to receive the GET/POST requests and to communicate with MySQL
+- Java, JDBC and Servlets were used to receive the GET/POST requests and communicate with MySQL
 
 
 
